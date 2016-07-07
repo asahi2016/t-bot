@@ -1,6 +1,6 @@
 RewriteEngine on
 
-#RewriteBase /twitterbot
+RewriteBase /t-bot
 
 RewriteCond $1 !^(index\.php|resources|robots\.txt)
 RewriteCond %{REQUEST_FILENAME} !-f

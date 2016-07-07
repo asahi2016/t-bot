@@ -21,3 +21,4 @@
     <?php if(isset($_SESSION['user_id'])){?>
     <a href="<?php echo  base_url();?>web/logout" id="logout">Logout</a>
     <?php } ?>
+    
