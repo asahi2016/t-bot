@@ -1,0 +1,14 @@
+RewriteEngine on
+
+#RewriteBase /twitterbot
+
+RewriteCond $1 !^(index\.php|resources|robots\.txt)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?/$1 [L,QSA]
+
+<FilesMatch "\.(?i:pdf)$">
+  ForceType application/octet-stream
+  Header set Content-Disposition attachment
+</FilesMatch>
+

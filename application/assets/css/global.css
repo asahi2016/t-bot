@@ -1,0 +1,106 @@
+/* Author : Karthik R */
+
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
+table{border-collapse:collapse;border-spacing:0}
+fieldset,img{border:0}
+ol,ul{list-style-type:none}
+sup{vertical-align:text-top}
+sub{vertical-align:text-bottom}
+input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit}
+input,textarea,select{*font-size:100%}
+a, a:hover {text-decoration:none; outline:none}
+:focus {none}
+img {border:0}
+body {font:normal 12px/18px Tahoma; color:#534f4f}
+.clearfix{clear:both;}
+.left{float:left;}
+.right{float:right;}
+
+.wrap{
+	width:1100px;
+	margin:0px auto;
+}
+.form-section{
+	width:100%;
+	float:left;
+}
+.form-section h1{
+	font:normal 56px/60px Tahoma;
+	width:100%;
+	text-align:center;
+	margin:20px 0px;
+	letter-spacing:1px;
+}
+.form-section h2{
+	font:normal 12px/18px Tahoma;
+}
+.form-section h1,.form-section h2{
+	text-align:center;
+	margin:20px 0px;	
+}
+.twitter-form{
+	width: 900px;
+    margin:50px auto 0;
+}
+.twitter-form .form-group{
+	width:100%;
+	float:left;
+}
+.twitter-form .form-item{
+	float:left;
+	width:47%;
+	margin:0px 0px 0 0;
+}
+.twitter-form .form-group:first-child{
+	margin:20px 0 0 0;
+}
+.twitter-form .form-item:first-child{
+	margin:0px 0px 0 30px;
+}
+.twitter-form .form-item label{
+	width:120px;
+	font-weight:normal
+}
+.panel-red.panel {
+/*     border-color: #e74c3c; */
+box-shadow: 0px 0px 5px 2px #dedede;
+    padding: 10px 30px;
+}
+.twitter-form .panel-red.panel {
+	padding: 10px 30px 30px;
+}
+.panel-red > .panel-heading {
+    border-bottom:2px solid #50C5B7;
+	padding:10px 0px;
+}
+.panel-heading .panel-title{
+	font-size: 20px;
+    color: #726260;
+}
+.panel-heading {
+    color: #fff;
+    padding: 5px 15px;
+}
+.panel .panel-body {
+    padding:25px 0px 0;
+	/* border-bottom:2px solid #50C5B7 */
+}
+.margin-bottom-25{
+	margin-bottom:25px;
+}
+.panel-body h4{
+	margin:20px 0px;
+}
+.panel h3{
+	margin:0px;
+}
+.panel label{
+	margin:20px 0px 20px;
+}
+.style2{
+	font-family:monospace;
+}
+.m-right10{
+	margin:0 10px 0 0;
+}
