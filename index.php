@@ -319,7 +319,8 @@ function print_pre($array, $exit = 0){
 
 }
 
-
+echo 'hi';
+exit;
 /*
  * --------------------------------------------------------------------
  * LOAD THE BOOTSTRAP FILE
