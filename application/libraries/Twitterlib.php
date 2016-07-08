@@ -9,7 +9,7 @@ define('CONSUMER_SECRET' , '8AulntgwzuxkQAznMIPs4MQjxsWlEfjJandKpy4JfMdOAqSXwO')
 define('TWIT_OAUTH_TOKEN' , '748075771244118016-63qGWcvCs2EDjSO6KowkzwpN2IKyq2O');
 define('TWIT_OAUTH_TOKEN_SECRET' , 'NjGzsTgkpDzgZFVd3KZHmOYaVoTUgsrSaeKewfYSQ4QVR');
 
-require "/opt/lampp/htdocs/twitterbot/application/libraries/Abraham/TwitterOAuth/autoload.php";
+require __DIR__."/Abraham/TwitterOAuth/autoload.php";
 
 use Abraham\TwitterOAuth\TwitterOAuth;
 
