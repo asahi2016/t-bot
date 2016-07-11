@@ -143,7 +143,7 @@ class Web extends CI_Controller {
 	public function endpoint()
 	{
 		if(isset($_REQUEST['error']) && !empty($_REQUEST['error'])){
-			redirect('web');
+			redirect('web/logout');
 		}
 
 		log_message('debug', 'controllers.Web.endpoint called.');
