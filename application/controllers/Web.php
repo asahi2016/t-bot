@@ -9,7 +9,7 @@ class Web extends CI_Controller {
 		$this->load->library('HybridAuthLib');
 		$this->load->model('User_model');
 
-		if(!$this->is_user_logged_in_social()){
+		if($this->is_user_logged_in_social()){
 			redirect('twitter');
 		}
 
