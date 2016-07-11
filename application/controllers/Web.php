@@ -18,6 +18,10 @@ class Web extends CI_Controller {
 	public function is_user_logged_in_social(){
 
 		if(isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])){
+
+			if(!empty($this->uri->segment(2)) && ($this->uri->segment(2) == 'logout')){
+				return false;
+			}
 			return true;
 		}
 
