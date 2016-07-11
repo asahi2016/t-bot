@@ -2,19 +2,20 @@
 	<div class="block form-group">
 		<div style="text-align:center;padding:5px;margin-top: 50px;">
 			<p>
-				<a href="http://www.twitterbots.dev"><img src="https://i.imgur.com/zEnLrRJ.png"></a>
+			<!--<a href="http://www.twitterbots.dev"><img src="https://i.imgur.com/zEnLrRJ.png"></a>-->
+			<h1>Twitter Bots</h1>
 			</p>
-			<p>
+			<!--<p>
 				<small>
 					Written by <a target="_blank" href="https://twitter.com/krishna2705">@Asahitechnologies</a>.
 				</small>
-			</p>
+			</p>-->
 		</div>
 	</div>
 
 	<div id="body">
 		<p>
-			We've provide twitter bots services. If you want to make twitter bots to your business tweets like promotion tweets,
+			We've provide twitter bots services. If you want to make twitter bots to your business tweets like promotion,
 			</br> Please here you can sign in by using following social network.
 			 <!--If you have previously authenticated, Please proceed with <a href="<?/* echo  base_url();*/?>login"> Login</a>-->
 		</p>
