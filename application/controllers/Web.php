@@ -8,6 +8,20 @@ class Web extends CI_Controller {
 		parent::__construct();
 		$this->load->library('HybridAuthLib');
 		$this->load->model('User_model');
+
+		if(!$this->is_user_logged_in_social()){
+			redirect('twitter');
+		}
+
+	}
+
+	public function is_user_logged_in_social(){
+
+		if(isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])){
+			return true;
+		}
+
+		return false;
 	}
 
 	public function index()
