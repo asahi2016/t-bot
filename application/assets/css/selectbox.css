@@ -44,6 +44,8 @@
     right: -1px;
     top: 33px;
     z-index: 999;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .btn-select ul li {

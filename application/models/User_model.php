@@ -4,14 +4,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class User_model extends CI_Model
 {
 
-    var $accounts_table = 'users';
+    var $user_table = 'users';
 
     // insert user infor if the user info not present in users table
     public function get_user_by_social_identifier($identifier){
 
         $query = $this->db->where('identifier', $identifier)
                           ->limit(1)
-                          ->get($this->accounts_table);
+                          ->get($this->user_table);
 
        return  $query->row();
 
@@ -22,7 +22,7 @@ class User_model extends CI_Model
 
         $query = $this->db->where('uid', $user_id)
             ->limit(1)
-            ->get($this->accounts_table);
+            ->get($this->user_table);
 
         return  $query->row();
 
@@ -32,7 +32,7 @@ class User_model extends CI_Model
     // insert user infor if the user info not present in users table
     public function insert_user($user){
 
-        if($this->db->insert($this->accounts_table, $user)){
+        if($this->db->insert($this->user_table, $user)){
 
             return  $this->db->insert_id();
 

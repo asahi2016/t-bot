@@ -437,3 +437,12 @@ input {
 .pItem:hover {
     background:#ffc;
 }
+
+.error{
+    color: red;
+}
+
+.panel-body span.error{
+    margin: 5px 0 0 40px;
+    float: left;
+}

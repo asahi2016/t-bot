@@ -1,9 +1,10 @@
 $(document).ready(function () {
     $(".btn-select").each(function (e) {
-        var value = $(this).find("ul li.selected").html();
+        var value = $(this).find("ul li.selected").attr('rel');
+        var content = $(this).find("ul li.selected").html();
         if (value != undefined) {
             $(this).find(".btn-select-input").val(value);
-            $(this).find(".btn-select-value").html(value);
+            $(this).find(".btn-select-value").html(content);
         }
     });
 });
@@ -15,11 +16,14 @@ $(document).on('click', '.btn-select', function (e) {
         if (ul.find("li").is(e.target)) {
             var target = $(e.target);
             target.addClass("selected").siblings().removeClass("selected");
-            var value = target.html();
+            var value = target.attr('rel');
+            var content = target.html();
             $(this).find(".btn-select-input").val(value);
-            $(this).find(".btn-select-value").html(value);
+            $(this).find(".btn-select-value").html(content);
+
         }
         ul.hide();
+        $(this).next('span.error').remove();
         $(this).removeClass("active");
     }
     else {
