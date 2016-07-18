@@ -167,7 +167,7 @@ class Twitter_model extends CI_Model
         $this->load->library('twitterlib', $config);
 
         // Post Update
-        $content = $this->twitterlib->tweetpost($message);
+        $content = $this->twitterlib->post($message);
 
         return true;
     }
