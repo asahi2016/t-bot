@@ -14,6 +14,8 @@ $times = array(
     '12 AM','01 AM','02 AM','03 AM','04 AM','05 AM','06 AM','07 AM','08 AM','09 AM','10 AM','11 AM',
     '12 PM','01 PM','02 PM','03 PM','04 PM','05 PM','06 PM','07 PM','08 PM','09 PM','10 PM','11 PM');
 
+$bots = array(1,2,3,4,5);
+
 ?>
 <span class="success" style="color: green;"><?php echo isset($success)? $success: '';?></span>
 <section class="form-section">
@@ -62,17 +64,27 @@ $times = array(
                         <div class="row">
                             <div class="col-md-12">
                                 <h3>What will the Twitter bots do?</h3>
-                                <label>Bot #1  </label>
+                                <?php foreach ($bots as $bkey => $bot){
+                                  $display = 'display : block';
+                                  $class = '';
+                                  if($bot > 1){
+                                      $display = 'display : none';
+                                  }elseif($bot == 1){
+                                      $class = 'class="active"';
+                                  }
+                                ?>
+                                <div id="group<?=$bkey?>" style="<?=$display;?>" <?=$class?>>
+                                <label>Bot #<?=$bot?>  </label>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="input-group">
                                             <span class="input-group-addon">@</span>
-                                            <input type="text" class="form-control" placeholder="Search phrase" name="search_phrase" id="search_phrase" value="<?php echo  isset($search_phrase)? $search_phrase :''; ?>">
+                                            <input type="text" class="form-control" placeholder="Search phrase" name="search_phrase_<?=$bkey?>" id="search_phrase_<?=$bkey?>" value="<?php echo  isset($search_phrase[$bkey])? $search_phrase[$bkey] :''; ?>">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <a class="btn btn-primary btn-select btn-select-light">
-                                            <input type="hidden" class="btn-select-input" id="tweet_action" name="tweet_action" value="<?php echo  isset($tweet_action)? $tweet_action :''; ?>" />
+                                            <input type="hidden" class="btn-select-input" id="tweet_action_<?=$bkey?>" name="tweet_action_<?=$bkey?>" value="<?php echo  isset($tweet_action[$bkey])? $tweet_action[$bkey] :''; ?>" />
                                             <span class="btn-select-value">--Select Action--</span>
                                             <span class='btn-select-arrow glyphicon glyphicon-chevron-down'></span>
                                             <ul style="overflow-y: scroll;overflow-x: hidden;">
@@ -97,12 +109,12 @@ $times = array(
                                     <div class="col-md-4">
                                         <div class="input-group">
                                             <span class="input-group-addon">@</span>
-                                            <input type="text" class="form-control" placeholder="Message" name="message" value="<?php echo  isset($message)? $message :''; ?>">
+                                            <input type="text" class="form-control" placeholder="Message" name="message_<?=$bkey?>" value="<?php echo  isset($message[$bkey])? $message[$bkey] :''; ?>">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <a class="btn btn-primary btn-select btn-select-light">
-                                            <input type="hidden" class="btn-select-input" id="start_time" name="start_time" value="<?php echo  isset($start_time)? $start_time :''; ?>" />
+                                            <input type="hidden" class="btn-select-input" id="start_time_<?=$bkey?>" name="start_time_<?=$bkey?>" value="<?php echo  isset($start_time[$bkey])? $start_time[$bkey] :''; ?>" />
                                             <span class="btn-select-value">Start at</span>
                                             <span class='btn-select-arrow glyphicon glyphicon-chevron-down'></span>
                                             <ul style="height: 100px;">
@@ -123,7 +135,7 @@ $times = array(
                                     </div>
                                     <div class="col-md-4">
                                         <a class="btn btn-primary btn-select btn-select-light">
-                                            <input type="hidden" class="btn-select-input" id="end_time" name="end_time" value="<?php echo  isset($end_time)? $end_time :''; ?>" />
+                                            <input type="hidden" class="btn-select-input" id="end_time_<?=$bkey?>" name="end_time_<?=$bkey?>" value="<?php echo  isset($end_time[$bkey])? $end_time[$bkey] :''; ?>" />
                                             <span class="btn-select-value">End at</span>
                                             <span class='btn-select-arrow glyphicon glyphicon-chevron-down'></span>
                                             <ul style="height: 100px;">
@@ -143,6 +155,8 @@ $times = array(
                                         </a>
                                     </div>
                                 </div>
+                                </div>
+                                <?php } ?>
                                 <div class="margin-bottom-25"></div>
                                 <div class="row">
                                     <div class="col-md-12">
@@ -156,6 +170,7 @@ $times = array(
             <div class="margin-bottom-25"></div>
             <div class="row">
                 <div class="col-md-12">
+                    <button type="button" value="Add another bot item" class="btn btn-primary m-right10" name="add"> <i class="fa fa-twitter-square"></i> Add another bot item</button>
                     <button type="submit" value="Create Twitter Bots" class="btn btn-primary m-right10" name="botsubmit"> <i class="fa fa-twitter-square"></i> Create Twitter Bots</button>
                     <!--<button type="submit" class="btn btn-success" value="Upgrade to Premium"> <i class="fa fa-money"></i> Upgrade to Premium</button>-->
                 </div>
