@@ -7,6 +7,7 @@ class Twitter_model extends CI_Model
     var $accounts_table = 'accounts';
     var $credentials_table = 'credentials';
     var $posts_table = 'posts';
+    var $relation_table = 'relations';
 
     // get the active twitter account from the database, by row active = 1
     public function getActiveAccount()
@@ -105,42 +106,51 @@ class Twitter_model extends CI_Model
 
     }
 
-    public function save_bots($user_id, $cid, $bots = array()){
+    public function save_bots($user_id, $cid, $bots = array(), $total = array()){
 
         if(!empty($user_id)){
 
-            //Check already this api credentials has been twitter bots records
-            $post = $this->check_bots($user_id, $cid);
 
-            $api_info = array(
-                /*'uid' => $user_id,
-                'cid' => $cid,*/
-                'message' => $bots['message'],
-                'tag' => $bots['search_phrase'],
-                'action' => $bots['tweet_action'],
-                'start_time' => $bots['start_time'],
-                'end_time' => $bots['end_time'],
-                'status' => 1,
+            $bot_relation = array(
+                'uid' => $user_id,
+                'cid' => $cid,
+                'data' => serialize($bots),
                 'updated' => date('Y-m-d H:i:s'),
             );
 
-            if(!$post) {
+            $relation_id = '';
 
-                $api_info['uid'] = $user_id;
-                $api_info['cid'] = $cid;
-
-                $this->db->insert($this->posts_table, $api_info);
-
-                return $this->db->insert_id();
-
-            }else{
-
-                $this->db->where('uid', $user_id);
-                $this->db->where('cid', $cid);
-                if($this->db->update($this->posts_table , $api_info)){
-                    return true;
-                }
+            if($this->db->insert($this->relation_table, $bot_relation)){
+                $relation_id = $this->db->insert_id();
             }
+
+            if($relation_id) {
+                //Check already this api credentials has been twitter bots records
+                foreach ($total as $k => $val) {
+
+                    if ($k <= $bots['totalbots']) {
+
+                        $api_info = array(
+                            'uid' => $user_id,
+                            'cid' => $cid,
+                            'message' => $bots['message'][$k],
+                            'tag' => $bots['search_phrase'][$k],
+                            'action' => $bots['tweet_action'][$k],
+                            'start_time' => $bots['start_time'][$k],
+                            'end_time' => $bots['end_time'][$k],
+                            'relation' => $relation_id,
+                            'status' => 0,
+                            'updated' => date('Y-m-d H:i:s'),
+                        );
+
+                        $this->db->insert($this->posts_table, $api_info);
+                    }
+
+                }
+
+                return true;
+            }
+
         }
         return false;
 

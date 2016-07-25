@@ -17,7 +17,7 @@ $times = array(
 $bots = array(1,2,3,4,5);
 
 ?>
-<span class="success" style="color: green;"><?php echo isset($success)? $success: '';?></span>
+
 <section class="form-section">
         <h1>Twitter Bots</h1>
         <h2>Written by @Asahitechnologies.</h2>
@@ -28,6 +28,7 @@ $bots = array(1,2,3,4,5);
                     <div class="panel-heading">
                         <h3 class="panel-title"><!-- <i class="fa fa-tasks"></i>  -->Enter your Twitter Apps Keys:</h3>
                     </div>
+                    <span class="success" style="color: green;"><?php echo isset($success)? $success: '';?></span>
                     <?php echo form_error('authcheck'); ?>
                     <div class="panel-body">
                         <div class="row">
@@ -64,7 +65,9 @@ $bots = array(1,2,3,4,5);
                         <div class="row">
                             <div class="col-md-12">
                                 <h3>What will the Twitter bots do?</h3>
-                                <?php foreach ($bots as $bkey => $bot){
+                                <?php
+
+                                foreach ($bots as $bkey => $bot){
                                   $display = 'display : block';
                                   $class = '';
                                   if($bot > 1){
@@ -79,20 +82,20 @@ $bots = array(1,2,3,4,5);
                                     <div class="col-md-6">
                                         <div class="input-group">
                                             <span class="input-group-addon">@</span>
-                                            <input type="text" class="form-control" placeholder="Search phrase" name="search_phrase_<?=$bkey?>" id="search_phrase_<?=$bkey?>" value="<?php echo  isset($search_phrase[$bkey])? $search_phrase[$bkey] :''; ?>">
+                                            <input type="text" class="form-control" placeholder="Search phrase" name="search_phrase[<?=$bkey?>]" id="search_phrase_<?=$bkey?>" value="<?php echo  isset($search_phrase[$bkey])? $search_phrase[$bkey] :''; ?>">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <a class="btn btn-primary btn-select btn-select-light">
-                                            <input type="hidden" class="btn-select-input" id="tweet_action_<?=$bkey?>" name="tweet_action_<?=$bkey?>" value="<?php echo  isset($tweet_action[$bkey])? $tweet_action[$bkey] :''; ?>" />
+                                            <input type="hidden" class="btn-select-input" id="tweet_action_<?=$bkey?>" name="tweet_action[<?=$bkey?>]" value="<?php echo isset($tweet_action[$bkey])? $tweet_action[$bkey] :''; ?>" />
                                             <span class="btn-select-value">--Select Action--</span>
                                             <span class='btn-select-arrow glyphicon glyphicon-chevron-down'></span>
                                             <ul style="overflow-y: scroll;overflow-x: hidden;">
                                                 <?php
                                                 foreach ($tweet_services as $service_key => $service){
                                                     $class = '';
-                                                    if(isset($tweet_action) && !empty($tweet_action)){
-                                                        if($tweet_action == $service_key){
+                                                    if(isset($tweet_action[$bkey]) && !empty($tweet_action[$bkey])){
+                                                        if($tweet_action[$bkey] == $service_key){
                                                             $class = 'class="selected"';
                                                         }
                                                     }
@@ -109,20 +112,20 @@ $bots = array(1,2,3,4,5);
                                     <div class="col-md-4">
                                         <div class="input-group">
                                             <span class="input-group-addon">@</span>
-                                            <input type="text" class="form-control" placeholder="Message" name="message_<?=$bkey?>" value="<?php echo  isset($message[$bkey])? $message[$bkey] :''; ?>">
+                                            <input type="text" class="form-control" placeholder="Message" name="message[<?=$bkey?>]" value="<?php echo isset($message[$bkey])? $message[$bkey] :''; ?>">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <a class="btn btn-primary btn-select btn-select-light">
-                                            <input type="hidden" class="btn-select-input" id="start_time_<?=$bkey?>" name="start_time_<?=$bkey?>" value="<?php echo  isset($start_time[$bkey])? $start_time[$bkey] :''; ?>" />
+                                            <input type="hidden" class="btn-select-input" id="start_time_<?=$bkey?>" name="start_time[<?=$bkey?>]" value="<?php echo isset($start_time[$bkey])? $start_time[$bkey] :''; ?>" />
                                             <span class="btn-select-value">Start at</span>
                                             <span class='btn-select-arrow glyphicon glyphicon-chevron-down'></span>
                                             <ul style="height: 100px;">
                                                 <?php
                                                 foreach ($times as $st_key => $st_time){
                                                     $class = '';
-                                                    if(isset($start_time) && !empty($start_time)){
-                                                        if($start_time == $st_key){
+                                                    if(isset($start_time[$bkey]) && !empty($start_time[$bkey])){
+                                                        if($start_time[$bkey] == $st_key){
                                                          $class = 'class="selected"';
                                                         }
                                                     }
@@ -135,15 +138,15 @@ $bots = array(1,2,3,4,5);
                                     </div>
                                     <div class="col-md-4">
                                         <a class="btn btn-primary btn-select btn-select-light">
-                                            <input type="hidden" class="btn-select-input" id="end_time_<?=$bkey?>" name="end_time_<?=$bkey?>" value="<?php echo  isset($end_time[$bkey])? $end_time[$bkey] :''; ?>" />
+                                            <input type="hidden" class="btn-select-input" id="end_time_<?=$bkey?>" name="end_time[<?=$bkey?>]" value="<?php echo isset($end_time[$bkey])? $end_time[$bkey] :''; ?>" />
                                             <span class="btn-select-value">End at</span>
                                             <span class='btn-select-arrow glyphicon glyphicon-chevron-down'></span>
                                             <ul style="height: 100px;">
                                                 <?php
                                                 foreach ($times as $ed_key => $ed_time){
                                                     $class = '';
-                                                    if(isset($end_time) && !empty($end_time)){
-                                                        if($end_time == $ed_key){
+                                                    if(isset($end_time[$bkey]) && !empty($end_time[$bkey])){
+                                                        if($end_time[$bkey] == $ed_key){
                                                             $class = 'class="selected"';
                                                         }
                                                     }
@@ -166,7 +169,8 @@ $bots = array(1,2,3,4,5);
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>'
+                <input type="hidden" name="totalbots" id="totalbots" value="0">
             <div class="margin-bottom-25"></div>
             <div class="row">
                 <div class="col-md-12">

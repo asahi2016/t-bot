@@ -11,6 +11,16 @@ $(document).ready(function () {
 
         if(error){
             return false;
+        }else{
+            group.each(function(i) {
+                if (!$(this).hasClass('active')) {
+                    $(this).remove();
+                }else{
+                    $('#totalbots').val(i);
+                }
+            });
+
+            return true;
         }
 
     });
