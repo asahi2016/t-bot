@@ -78,7 +78,7 @@ class Twitterlib{
                 $post_value = array('q' => $bot->tag, 'result_type' => 'recent');
                 $tweet_info=$this->connection->get($service_url,$post_value);
                 foreach ($tweet_info as $k => $tweet){
-                    $content=$this->connection->post($this->retweet.$tweet[0]->id);
+                    $content=$this->connection->post($this->retweet.$tweet_info[$k]->id);
                 }
                 break;
 
@@ -94,10 +94,9 @@ class Twitterlib{
                 $post_value = array('q' => $bot->tag, 'result_type' => 'recent');
                 $tweet_info=$this->connection->get($service_url,$post_value);
                 foreach ($tweet_info as $k => $tweet){
-                    $content=$this->connection->post('statuses/update',array('status'=>$bot->message.' '.'https://twitter.com/'.$api_user->screen_name.'/status/'.$tweet[0]->id));
+                    $content=$this->connection->post('statuses/update',array('status'=>$bot->message.' '.'https://twitter.com/'.$api_user->screen_name.'/status/'.$tweet_info[$k]->id));
                 }
                 break;
-
 
             case 'Reply':
                 $service_url = $this->reply;
@@ -109,8 +108,8 @@ class Twitterlib{
                 $service_url = $this->search;
                 $post_value= array('q' => $bot->tag);
                 $content = $this->connection->get('users/search',$post_value );
-                for ($i = 0; $i < 10; $i++) {
-                    $log = $this->connection->post('lists/members/create', array('slug' => 'family', 'owner_screen_name' => $api_user->screen_name , 'user_id' => $content[$i]->id));
+                foreach ($content as $k => $val){
+                    $log = $this->connection->post('lists/members/create', array('slug' => 'family', 'owner_screen_name' => $api_user->screen_name , 'user_id' => $content[$k]->id));
                 }
                 break;
 
@@ -120,17 +119,14 @@ class Twitterlib{
                 $tweet_info=$this->connection->get($service_url,$post_value);
                 foreach ($tweet_info as $k => $tweet)
                 {
-                    $content=$this->connection->post($this->favorite, array('id' => $tweet[0] -> id));
+                    $content=$this->connection->post($this->favorite, array('id' => $tweet_info[$k]->id));
                 }
                 break;
 
             case 'DM Followers':
                 $content = $this->connection->get('followers/list', array('screen_name'=> $api_user->screen_name ));
                 foreach ($content as $k => $a) {
-                    for ($i = 0; $i <20; $i++) {
-                        $content = $this->connection->post('direct_messages/new', array('user_id' => $a[$i]->id, 'text' => $bot->message));
-
-                    }
+                   $content = $this->connection->post('direct_messages/new', array('user_id' => $content[$k]->id, 'text' => $bot->message));
                 }
                 break;
         }
