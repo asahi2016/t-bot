@@ -125,8 +125,8 @@ class Twitterlib{
 
             case 'DM Followers':
                 $content = $this->connection->get('followers/list', array('screen_name'=> $api_user->screen_name ));
-                foreach ($content as $k => $a) {
-                   $content = $this->connection->post('direct_messages/new', array('user_id' => $content[$k]->id, 'text' => $bot->message));
+                foreach ($content->users as $k => $a) {
+                   $log = $this->connection->post('direct_messages/new', array('user_id' => $content->users[$k]->id, 'text' => $bot->message));
                 }
                 break;
         }
