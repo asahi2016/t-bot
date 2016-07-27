@@ -28,9 +28,11 @@ class Services extends CI_Controller {
 
 		$config  = $this->build_api_info($api);
 
+		$this->load->library('twitterlib', $config);
+
 		foreach ($bots as $k => $bot){
 
-			$this->twitter_model->post_tweet($bot->message , $config);
+			$this->twitterlib->tweets($bot->action, $bot);
 
 		}
 

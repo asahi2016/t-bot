@@ -25,40 +25,116 @@ class Twitterlib{
 
     public $oauth_token_secret = '';
 
+    public $direct = 'direct_messages/new';
+
+    public $retweet = 'statuses/retweet/';
+
+    public $follow = 'friendships/create';
+
+    public $search = 'search/tweets';
+
+    public $reply= 'statuses/update';
+
+    public $favorite= 'favorites/create';
+
+    public $follow_list= 'followers/list';
+
+    public $add= 'lists/members/create';
+
     public function __construct($config = array())
     {
 
-       if(!empty($config)) {
+        if(!empty($config)) {
 
-           $this->consumer_key = isset($config['consumer_key']) ? $config['consumer_key'] : '';
-           $this->consumer_secret = isset($config['consumer_secret']) ? $config['consumer_secret'] : '';
-           $this->oauth_token = isset($config['access_token']) ? $config['access_token'] : '';
-           $this->oauth_token_secret = isset($config['access_secret']) ? $config['access_secret'] : '';
+            $this->consumer_key = isset($config['consumer_key']) ? $config['consumer_key'] : '';
+            $this->consumer_secret = isset($config['consumer_secret']) ? $config['consumer_secret'] : '';
+            $this->oauth_token = isset($config['access_token']) ? $config['access_token'] : '';
+            $this->oauth_token_secret = isset($config['access_secret']) ? $config['access_secret'] : '';
 
-       }
+        }
 
-       $this->connection = new TwitterOAuth($this->consumer_key , $this->consumer_secret , $this->oauth_token , $this->oauth_token_secret);
-       //$this->connection = new TwitterOAuth(CONSUMER_KEY , CONSUMER_SECRET , TWIT_OAUTH_TOKEN , TWIT_OAUTH_TOKEN_SECRET);
+        $this->connection = new TwitterOAuth($this->consumer_key , $this->consumer_secret , $this->oauth_token , $this->oauth_token_secret);
+        //$this->connection = new TwitterOAuth(CONSUMER_KEY , CONSUMER_SECRET , TWIT_OAUTH_TOKEN , TWIT_OAUTH_TOKEN_SECRET);
     }
 
-    public function post($msg)
+    public function tweets($action, $bot)
     {
+        $service_url = '';
+        $post_value = array();
+        $content='';
 
-        if ($msg) {
+        $api_user = $this->check();
 
-            // Post Update
-            $content = $this->connection->post('statuses/update', array('status' => $msg));
+        switch($action){
 
-            if ($content) {
+            case 'DM':
+                $service_url = $this->direct;
+                $post_value = array('text' => $bot->message, 'screen_name' => $bot->tag);
+                $this->connection->post($service_url, $post_value);
+                break;
 
-                if (isset($content->id) && !empty($content->id) && is_numeric($content->id)) {
-                    return $content;
+            case 'Retweet':
+                $service_url = $this->search;
+                $post_value = array('q' => $bot->tag, 'result_type' => 'recent');
+                $tweet_info=$this->connection->get($service_url,$post_value);
+                foreach ($tweet_info as $k => $tweet){
+                    $content=$this->connection->post($this->retweet.$tweet[0]->id);
                 }
+                break;
 
-            }
+            case 'Follow User':
+                $service_url = $this->follow;
+                $post_value = array('screen_name' => $bot->tag);
+                $this->post($service_url, $post_value);
+                break;
 
-            return false;
+            case 'RT with Comment':
+
+                $service_url = $this->search;
+                $post_value = array('q' => $bot->tag, 'result_type' => 'recent');
+                $tweet_info=$this->connection->get($service_url,$post_value);
+                foreach ($tweet_info as $k => $tweet){
+                    $content=$this->connection->post('statuses/update',array('status'=>$bot->message.' '.'https://twitter.com/'.$api_user->screen_name.'/status/'.$tweet[0]->id));
+                }
+                break;
+
+
+            case 'Reply':
+                $service_url = $this->reply;
+                $post_value = array('status'=> $bot->message);
+                $content=$this->connection->post($service_url,$post_value);
+                break;
+
+            case 'Add to Twitter List':
+                $service_url = $this->search;
+                $post_value= array('q' => $bot->tag);
+                $content = $this->connection->get('users/search',$post_value );
+                for ($i = 0; $i < 10; $i++) {
+                    $log = $this->connection->post('lists/members/create', array('slug' => 'family', 'owner_screen_name' => $api_user->screen_name , 'user_id' => $content[$i]->id));
+                }
+                break;
+
+            case 'Favorite':
+                $service_url = $this->search;
+                $post_value=array('q' => $bot->tag, 'result_type' => 'recent');
+                $tweet_info=$this->connection->get($service_url,$post_value);
+                foreach ($tweet_info as $k => $tweet)
+                {
+                    $content=$this->connection->post($this->favorite, array('id' => $tweet[0] -> id));
+                }
+                break;
+
+            case 'DM Followers':
+                $content = $this->connection->get('followers/list', array('screen_name'=> $api_user->screen_name ));
+                foreach ($content as $k => $a) {
+                    for ($i = 0; $i <20; $i++) {
+                        $content = $this->connection->post('direct_messages/new', array('user_id' => $a[$i]->id, 'text' => $bot->message));
+
+                    }
+                }
+                break;
         }
+
     }
 
 
@@ -68,8 +144,32 @@ class Twitterlib{
 
         if(isset($credentials->id) && !empty($credentials->id)){
 
-            return true;
+            return $credentials;
 
+        }
+
+        return false;
+
+    }
+
+    public function post($url, $post){
+
+        $result = $this->connection->post($url , $post);
+
+        if (isset($result->id) && !empty($result->id) && is_numeric($result->id)) {
+            return $result;
+        }
+
+        return false;
+
+    }
+
+    public function get($url, $post){
+
+        $result = $this->connection->get($url , $post);
+
+        if (isset($result->id) && !empty($result->id) && is_numeric($result->id)) {
+            return $result;
         }
 
         return false;
