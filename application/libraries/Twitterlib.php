@@ -33,11 +33,13 @@ class Twitterlib{
 
     public $search = 'search/tweets';
 
+    public $user_search = 'users/search';
+
     public $reply= 'statuses/update';
 
     public $favorite= 'favorites/create';
 
-    public $follow_list= 'followers/list';
+    public $followers_list= 'followers/list';
 
     public $add= 'lists/members/create';
 
@@ -63,73 +65,250 @@ class Twitterlib{
         $post_value = array();
         $content='';
 
+        $return = false;
+
+
         $api_user = $this->check();
 
         switch($action){
 
             case 'DM':
-                $service_url = $this->direct;
                 $post_value = array('text' => $bot->message, 'screen_name' => $bot->tag);
-                $this->connection->post($service_url, $post_value);
+                if($this->direct_message($post_value)){
+                    $return = true;
+                }
                 break;
 
             case 'Retweet':
-                $service_url = $this->search;
                 $post_value = array('q' => $bot->tag, 'result_type' => 'recent');
-                $tweet_info=$this->connection->get($service_url,$post_value);
+                $tweet_info = $this->get_tweet_search_results($post_value);
                 foreach ($tweet_info->statuses as $k => $tweet){
-                    $content=$this->connection->post($this->retweet.$tweet_info->statuses[$k]->id);
+                    $retweet=$this->retweet(array(array('id' => $tweet_info->statuses[$k]->id)));
+                    if($retweet){
+                        $return = true;
+                    }
                 }
                 break;
 
             case 'Follow User':
-                $service_url = $this->follow;
                 $post_value = array('screen_name' => $bot->tag);
-                $this->post($service_url, $post_value);
+                if($this->follow_user($post_value)){
+                    $return = true;
+                }
                 break;
 
             case 'RT with Comment':
-
-                $service_url = $this->search;
                 $post_value = array('q' => $bot->tag, 'result_type' => 'recent');
-                $tweet_info=$this->connection->get($service_url,$post_value);
+                $tweet_info=$this->get_tweet_search_results($post_value);
                 foreach ($tweet_info->statuses as $k => $tweet){
-                    $content=$this->connection->post('statuses/update',array('status'=>$bot->message.' '.'https://twitter.com/'.$api_user->screen_name.'/status/'.$tweet_info->statuses[$k]->id));
+                    $content=$this->reply(array('status'=>$bot->message.' '.'https://twitter.com/'.$api_user->screen_name.'/status/'.$tweet_info->statuses[$k]->id));
+                    if($content){
+                        $return = true;
+                    }
                 }
                 break;
 
             case 'Reply':
-                $service_url = $this->reply;
+
                 $post_value = array('status'=> $bot->message);
-                $content=$this->connection->post($service_url,$post_value);
+                if($this->reply($post_value)){
+                    $return = true;
+                }
                 break;
 
             case 'Add to Twitter List':
-                $service_url = $this->search;
                 $post_value= array('q' => $bot->tag);
-                $content = $this->connection->get('users/search',$post_value );
+                $content = $this->get_user_search_results($post_value );
                 foreach ($content as $k => $val){
-                    $log = $this->connection->post('lists/members/create', array('slug' => 'family', 'owner_screen_name' => $api_user->screen_name , 'user_id' => $content[$k]->id));
+                    $log = $this->add_to_twitter_lists(array('slug' => 'family', 'owner_screen_name' => $api_user->screen_name , 'user_id' => $content[$k]->id));
+                    if($log){
+                        $return = true;
+                    }
                 }
                 break;
 
             case 'Favorite':
-                $service_url = $this->search;
+
                 $post_value=array('q' => $bot->tag, 'result_type' => 'recent');
-                $tweet_info=$this->connection->get($service_url,$post_value);
+                $tweet_info=$this->get_tweet_search_results($post_value);
                 foreach ($tweet_info->statuses as $k => $tweet)
                 {
-                    $content=$this->connection->post($this->favorite, array('id' => $tweet_info->statuses[$k]->id));
+                    $content=$this->favorite(array('id' => $tweet_info->statuses[$k]->id));
+                    if($content){
+                        $return = true;
+                    }
                 }
                 break;
 
             case 'DM Followers':
-                $content = $this->connection->get('followers/list', array('screen_name'=> $api_user->screen_name ));
+                $content = $this->get_dm_followers(array('screen_name'=> $api_user->screen_name ));
                 foreach ($content->users as $k => $a) {
-                   $log = $this->connection->post('direct_messages/new', array('user_id' => $content->users[$k]->id, 'text' => $bot->message));
+                   $log = $this->direct_message(array('user_id' => $content->users[$k]->id, 'text' => $bot->message));
+                   if($log){
+                       $return = true;
+                   }
                 }
                 break;
         }
+
+        return $return;
+
+    }
+
+    public function get_dm_followers($post_values = array()){
+
+
+        $return = false;
+
+        $content = $this->connection->get($this->followers_list, $post_values);
+
+        $content = json_decode($content);
+
+        if($content){
+            $return = $content;
+        }
+
+        return $return;
+
+    }
+
+    public function get_tweet_search_results($post_values = array()){
+
+
+        $return = false;
+
+        $content = $this->connection->get($this->search, $post_values);
+
+        $content = json_decode($content);
+
+        if($content){
+            $return = $content;
+        }
+
+        return $return;
+
+    }
+
+
+    public function get_user_search_results($post_values = array()){
+
+
+        $return = false;
+
+        $content = $this->connection->get($this->user_search, $post_values);
+
+        $content = json_decode($content);
+
+        if($content){
+            $return = $content;
+        }
+
+        return $return;
+
+    }
+
+
+    public function direct_message($post_values = array()){
+
+        $return = false;
+
+        $content = $this->connection->post($this->direct, $post_values);
+
+        $content = json_decode($content);
+
+        if($content){
+            $return = $content;
+        }
+
+        return $return;
+
+    }
+
+
+    public function retweet($ids = array()){
+
+        $return = false;
+
+        foreach ($ids as $id) {
+
+            $content = $this->connection->post($this->retweet.$id['id']);
+
+            $content = json_decode($content);
+        }
+
+        if($content){
+            $return = true;
+        }
+
+        return $return;
+
+    }
+
+    public function follow_user($post_values = array()){
+        //$this->follow
+
+        $return = false;
+
+        $content = $this->connection->post($this->follow, $post_values);
+
+        $content = json_decode($content);
+
+        if($content){
+            $return = $content;
+        }
+
+        return $return;
+
+    }
+
+
+    public function reply($post_values = array()){
+
+        $return = false;
+
+        $content = $this->connection->post($this->reply, $post_values);
+
+        $content = json_decode($content);
+
+        if($content){
+            $return = $content;
+        }
+
+        return $return;
+
+    }
+
+
+    public function add_to_twitter_lists($post_values = array()){
+
+        $return = false;
+
+        $content = $this->connection->post($this->add, $post_values);
+
+        $content = json_decode($content);
+
+        if($content){
+            $return = $content;
+        }
+
+        return $return;
+
+    }
+
+
+    public function favorite($post_values = array()){
+
+        $return = false;
+
+        $content = $this->connection->post($this->favorite, $post_values);
+
+        $content = json_decode($content);
+
+        if($content){
+            $return = $content;
+        }
+
+        return $return;
 
     }
 

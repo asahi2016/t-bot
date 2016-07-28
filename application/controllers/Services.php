@@ -32,7 +32,10 @@ class Services extends CI_Controller {
 
 		foreach ($bots as $k => $bot){
 
-			$this->twitterlib->tweets($bot->action, $bot);
+			if( $this->twitterlib->tweets($bot->action, $bot) ){
+				//Update twitter bot status as 1
+				$this->twitter_model->update_bot_status($bot->post_id);
+			}
 
 		}
 
