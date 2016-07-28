@@ -162,8 +162,6 @@ class Twitterlib{
 
         $content = $this->connection->get($this->followers_list, $post_values);
 
-        $content = json_decode($content);
-
         if($content){
             $return = $content;
         }
@@ -178,8 +176,6 @@ class Twitterlib{
         $return = false;
 
         $content = $this->connection->get($this->search, $post_values);
-
-        $content = json_decode($content);
 
         if($content){
             $return = $content;
@@ -197,8 +193,6 @@ class Twitterlib{
 
         $content = $this->connection->get($this->user_search, $post_values);
 
-        $content = json_decode($content);
-
         if($content){
             $return = $content;
         }
@@ -213,8 +207,6 @@ class Twitterlib{
         $return = false;
 
         $content = $this->connection->post($this->direct, $post_values);
-
-        $content = json_decode($content);
 
         if($content){
             $return = $content;
@@ -232,8 +224,6 @@ class Twitterlib{
         foreach ($ids as $id) {
 
             $content = $this->connection->post($this->retweet.$id['id']);
-
-            $content = json_decode($content);
         }
 
         if($content){
@@ -251,8 +241,6 @@ class Twitterlib{
 
         $content = $this->connection->post($this->follow, $post_values);
 
-        $content = json_decode($content);
-
         if($content){
             $return = $content;
         }
@@ -267,8 +255,6 @@ class Twitterlib{
         $return = false;
 
         $content = $this->connection->post($this->reply, $post_values);
-
-        $content = json_decode($content);
 
         if($content){
             $return = $content;
@@ -285,8 +271,6 @@ class Twitterlib{
 
         $content = $this->connection->post($this->add, $post_values);
 
-        $content = json_decode($content);
-
         if($content){
             $return = $content;
         }
@@ -301,8 +285,6 @@ class Twitterlib{
         $return = false;
 
         $content = $this->connection->post($this->favorite, $post_values);
-
-        $content = json_decode($content);
 
         if($content){
             $return = $content;
