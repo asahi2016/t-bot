@@ -198,4 +198,10 @@ class Twitter_model extends CI_Model
         }
 
     }
+    public function update($post)
+    {
+        $data=array('status'=>1);
+        $this->db->where('post_id',$post);
+        $this->db->update($this->posts_table,$data);
+    }
 }

@@ -77,8 +77,8 @@ class Twitterlib{
                 $service_url = $this->search;
                 $post_value = array('q' => $bot->tag, 'result_type' => 'recent');
                 $tweet_info=$this->connection->get($service_url,$post_value);
-                foreach ($tweet_info as $k => $tweet){
-                    $content=$this->connection->post($this->retweet.$tweet_info[$k]->id);
+                foreach ($tweet_info->statuses as $k => $tweet){
+                    $content=$this->connection->post($this->retweet.$tweet_info->statuses[$k]->id);
                 }
                 break;
 
@@ -93,8 +93,8 @@ class Twitterlib{
                 $service_url = $this->search;
                 $post_value = array('q' => $bot->tag, 'result_type' => 'recent');
                 $tweet_info=$this->connection->get($service_url,$post_value);
-                foreach ($tweet_info as $k => $tweet){
-                    $content=$this->connection->post('statuses/update',array('status'=>$bot->message.' '.'https://twitter.com/'.$api_user->screen_name.'/status/'.$tweet_info[$k]->id));
+                foreach ($tweet_info->statuses as $k => $tweet){
+                    $content=$this->connection->post('statuses/update',array('status'=>$bot->message.' '.'https://twitter.com/'.$api_user->screen_name.'/status/'.$tweet_info->statuses[$k]->id));
                 }
                 break;
 
@@ -117,9 +117,9 @@ class Twitterlib{
                 $service_url = $this->search;
                 $post_value=array('q' => $bot->tag, 'result_type' => 'recent');
                 $tweet_info=$this->connection->get($service_url,$post_value);
-                foreach ($tweet_info as $k => $tweet)
+                foreach ($tweet_info->statuses as $k => $tweet)
                 {
-                    $content=$this->connection->post($this->favorite, array('id' => $tweet_info[$k]->id));
+                    $content=$this->connection->post($this->favorite, array('id' => $tweet_info->statuses[$k]->id));
                 }
                 break;
 

@@ -91,6 +91,16 @@ class Web extends CI_Controller {
 
 					}
 
+
+					if(isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])){
+
+						$ip = $this->get_ip_address_info();
+
+						//update user country status
+
+						//save user activity log
+					}
+
 					redirect('twitter');
 
 				}
@@ -139,6 +149,17 @@ class Web extends CI_Controller {
 			show_error('Error authenticating user. '.base_url());
 		}
 	}
+
+
+	public function get_ip_address_info(){
+
+		$ip = file_get_contents('http://ipinfo.io');
+
+		$ip = json_decode($ip);
+
+		return $ip;
+	}
+
 
 	public function endpoint()
 	{
