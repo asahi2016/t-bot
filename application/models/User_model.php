@@ -5,6 +5,7 @@ class User_model extends CI_Model
 {
 
     var $user_table = 'users';
+    var $activity_table = 'activities';
 
     // insert user infor if the user info not present in users table
     public function get_user_by_social_identifier($identifier){
@@ -81,6 +82,43 @@ class User_model extends CI_Model
         }
 
         return $user_details;
+
+    }
+
+    public function update_ip_info($user_id, $ip){
+
+        $data=array('country'=> $ip->country, 'region' => $ip->region);
+        $this->db->where('uid',$user_id);
+        $this->db->update($this->user_table,$data);
+
+        $this->save_user_activity($user_id, $ip);
+
+        return true;
+    }
+
+
+    public function save_user_activity($user_id, $ip){
+
+        $latlag = explode(',',$ip->loc);
+
+        $activity = array(
+            'uid' => $user_id,
+            'ip_address' => $ip->ip,
+            'city' => $ip->city,
+            'region' => $ip->region,
+            'country' => $ip->country,
+            'lat' => $latlag[0],
+            'lag' => $latlag[1],
+        );
+
+
+        if($this->db->insert($this->activity_table , $activity)){
+
+            return  $this->db->insert_id();
+
+        }
+
+        return false;
 
     }
 

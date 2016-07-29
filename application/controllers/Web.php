@@ -65,6 +65,7 @@ class Web extends CI_Controller {
 
 					log_message('info', 'controllers.Web.login: user profile:'.PHP_EOL.print_r($user_profile, TRUE));
 
+					$ip = $this->get_ip_address_info();
 
 					if(!empty($user_profile->identifier) && !$user = $this->User_model->get_user_by_social_identifier($user_profile->identifier)) {
 
@@ -76,6 +77,9 @@ class Web extends CI_Controller {
 
 							if($user_id){
 
+								//Update country code
+								$this->User_model->update_ip_info($user_id, $ip);
+
 								$_SESSION['user_id'] = $user_id;
 								$_SESSION['user']  = $this->User_model->get_user_by_id($user_id);
 
@@ -86,19 +90,11 @@ class Web extends CI_Controller {
 						}
 					}else{
 
+						$this->User_model->update_ip_info($user->uid, $ip);
+
 						$_SESSION['user_id'] = $user->uid;
 						$_SESSION['user']  = $this->User_model->get_user_by_id($user->uid);
 
-					}
-
-
-					if(isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])){
-
-						$ip = $this->get_ip_address_info();
-
-						//update user country status
-
-						//save user activity log
 					}
 
 					redirect('twitter');
