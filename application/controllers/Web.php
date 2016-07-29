@@ -7,6 +7,7 @@ class Web extends CI_Controller {
 		// Constructor to auto-load HybridAuthLib
 		parent::__construct();
 		$this->load->library('HybridAuthLib');
+		$this->load->helper('custom_helper');
 		$this->load->model('User_model');
 
 		if($this->is_user_logged_in_social()){
@@ -65,7 +66,7 @@ class Web extends CI_Controller {
 
 					log_message('info', 'controllers.Web.login: user profile:'.PHP_EOL.print_r($user_profile, TRUE));
 
-					$ip = $this->get_ip_address_info();
+					$ip = get_ip_address_info( get_user_ip() );
 
 					if(!empty($user_profile->identifier) && !$user = $this->User_model->get_user_by_social_identifier($user_profile->identifier)) {
 
@@ -145,17 +146,6 @@ class Web extends CI_Controller {
 			show_error('Error authenticating user. '.base_url());
 		}
 	}
-
-
-	public function get_ip_address_info(){
-
-		$ip = file_get_contents('http://ipinfo.io');
-
-		$ip = json_decode($ip);
-
-		return $ip;
-	}
-
 
 	public function endpoint()
 	{
