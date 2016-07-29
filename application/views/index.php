@@ -71,7 +71,24 @@ $bots = array(1,2,3,4,5);
                                   $display = 'display : block';
                                   $class = '';
                                   if($bot > 1){
-                                      $display = 'display : none';
+
+                                      $show  = false;
+                                      if(isset($search_phrase[$bkey]))
+                                          $show = true;
+                                      elseif (isset($search_phrase[$bkey]))
+                                          $show = true;
+                                      elseif (isset($tweet_action[$bkey]))
+                                          $show = true;
+                                      elseif (isset($message[$bkey]))
+                                          $show = true;
+                                      elseif (isset($start_time[$bkey]))
+                                          $show = true;
+                                      elseif (isset($end_time[$bkey]))
+                                          $show = true;
+
+                                      if(!$show) $display = 'display : none';
+                                      else $class = 'class="active"';
+                                      
                                   }elseif($bot == 1){
                                       $class = 'class="active"';
                                   }
