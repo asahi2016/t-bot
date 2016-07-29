@@ -87,7 +87,9 @@ class User_model extends CI_Model
 
     public function update_ip_info($user_id, $ip){
 
-        $data=array('country'=> isset($ip->country)? $ip->country : '' , 'region' => isset($ip->region)? $ip->region : '');
+        $data=array('country'=> isset($ip->countryCode)? $ip->countryCode : '' ,
+                     'region' => isset($ip->regionName)? $ip->regionName : '' ,
+                     'description' => isset($ip->timezone)? $ip->timezone : '');
         $this->db->where('uid',$user_id);
         $this->db->update($this->user_table,$data);
 
@@ -99,20 +101,14 @@ class User_model extends CI_Model
 
     public function save_user_activity($user_id, $ip){
 
-        $latlag = array('','');
-
-        if(isset($ip->loc)) {
-            $latlag = explode(',', $ip->loc);
-        }
-
         $activity = array(
             'uid' => $user_id,
-            'ip_address' => isset($ip->ip)? $ip->ip : '',
+            'ip_address' => isset($ip->query)? $ip->query : '',
             'city' => isset($ip->city) ? $ip->city : '',
             'region' => isset($ip->region) ? $ip->region : '',
-            'country' => isset($ip->country) ? $ip->country : '',
-            'lat' => $latlag[0],
-            'lag' => $latlag[1],
+            'country' => isset($ip->countryCode) ? $ip->countryCode : '',
+            'lat' => isset($ip->lat) ? $ip->lat : '',
+            'lag' => isset($ip->lon) ? $ip->lon : '',
         );
 
 

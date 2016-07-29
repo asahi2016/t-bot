@@ -24,8 +24,10 @@ if ( ! function_exists('get_ip_address_info'))
      */
     function get_ip_address_info($ip = null)
     {
+        //http://ip-api.com/json/$ip
+        //http://ipinfo.io/$ip
 
-        $url = ($ip) ? 'http://ipinfo.io/'.$ip : 'http://ipinfo.io';
+        $url = ($ip) ? 'http://ip-api.com/json/'.$ip : 'http://ip-api.com/json/';
 
         $ip_info = file_get_contents($url);
 
