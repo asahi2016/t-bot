@@ -182,20 +182,22 @@ class Twitter_model extends CI_Model
         return true;
     }
 
-    public function get_created_bots($user_id){
-
-        if(!empty($user_id)){
+    public function get_created_bots($user_id = null){
 
             $this->db->select('post.*');
             $this->db->from("$this->relation_table rel");
             $this->db->join("$this->posts_table post", "rel.relation_id = post.relation", "left");
-            $this->db->where("rel.uid", $user_id);
+
+            if(!empty($user_id)){
+                $this->db->where("rel.uid", $user_id);
+            }
+
             $this->db->where("post.status", 0);
             $query = $this->db->get();
 
             return $query->result();
 
-        }
+
 
     }
     public function update_bot_status($post_id)

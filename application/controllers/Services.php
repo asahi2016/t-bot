@@ -21,20 +21,39 @@ class Services extends CI_Controller {
 		}
 
         $this->load->model('twitter_model');
+        $this->load->model('user_model');
 
-		$bots = $this->twitter_model->get_created_bots($user_id);
-
-		$api = $this->twitter_model->get_api_by_user_id($user_id);
-
-		$config  = $this->build_api_info($api);
-
-		$this->load->library('twitterlib', $config);
+		//Get all user lists
+		$bots = $this->twitter_model->get_created_bots();
 
 		foreach ($bots as $k => $bot){
 
-			if( $this->twitterlib->tweets($bot->action, $bot) ){
-				//Update twitter bot status as 1
-				$this->twitter_model->update_bot_status($bot->post_id);
+			$user_id = $bot->uid;
+
+			$user = $this->user_model->get_user_by_id($user_id);
+
+			$timezone = $user->description;
+
+			$timezone = 'Asia/Kolkata';
+
+			date_default_timezone_set($timezone);
+
+			$hour = date("H");
+
+			date_default_timezone_set('America/Los_Angeles');
+
+			if($bot->start_time >= $hour && $bot->end_time <= $hour) {
+
+				$api = $this->twitter_model->get_api_by_user_id($user_id);
+
+				$config = $this->build_api_info($api);
+
+				$this->load->library('twitterlib', $config);
+
+				if ($this->twitterlib->tweets($bot->action, $bot)) {
+					//Update twitter bot status as 1
+					$this->twitter_model->update_bot_status($bot->post_id);
+				}
 			}
 
 		}
