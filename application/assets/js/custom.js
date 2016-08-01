@@ -25,24 +25,66 @@ $(document).ready(function () {
 
     });
 
-    $('button[type="button"]').click(function () {
+    $('button[type="button"][name="add"]').click(function () {
         var error = fields_empty_checks();
         if(!error){
-           var open = true;
-           group.each(function(i) {
-               var id = $(this).attr('id');
-               if(!$('#'+id).hasClass('active')){
-                   if(open) {
-                       $('#'+id).addClass('active');
-                       $('#'+id).css('display', 'block');
-                       open = false;
-                   }
-               }
+           var total_bots = $('#totalbots').val();
+
+           $.post("twitter/additem", {bots: total_bots, action: 'add'}, function(result){
+                var data = JSON.parse(result);
+                $("#group"+total_bots).after(data.content);
+                $('#totalbots').val('');
+                $('#totalbots').val(data.total_bots);
            });
+
         }
     });
 
-    input_txt.keypress(function () {
+
+    $(document).on('click','button.remove', function(){
+
+        var total = '';
+        $('button.remove').each(function (i) {
+            total = total + i;
+        });
+
+        if(total > 0) {
+            var remove_group_id = $(this).attr('rel');
+            $('#group' + remove_group_id).remove();
+            var group   = $("div[id*='group']");
+            group.each(function(j,groups) {
+
+                var bot = j+1;
+
+                $(groups).find('label').text('Bot #'+bot);
+
+                $(groups).attr('id','group'+j);
+
+                $(groups).find('.remove').attr('rel', j);
+                $(groups).find('.remove').attr('name', 'remove_'+j);
+
+                $(groups).find('.search_phrase').attr('id', 'search_phrase_'+j);
+                $(groups).find('.search_phrase').attr('name', 'search_phrase['+j+']');
+
+                $(groups).find('.tweet_action').attr('id', 'tweet_action_'+j);
+                $(groups).find('.tweet_action').attr('name', 'tweet_action['+j+']');
+
+                $(groups).find('.message').attr('name', 'message['+j+']');
+
+
+                $(groups).find('.start_time').attr('id', 'start_time_'+j);
+                $(groups).find('.start_time').attr('name', 'start_time['+j+']');
+
+                $(groups).find('.end_time').attr('id', 'end_time_'+j);
+                $(groups).find('.end_time').attr('name', 'end_time['+j+']');
+
+                $('#totalbots').val(j);
+            });
+        }
+
+    });
+
+    $(document).on('keypress', 'input[type="text"]' , function () {
         $(this).parent('div').next('span.error').remove();
     });
 
@@ -51,82 +93,27 @@ $(document).ready(function () {
         $('span.error').remove();
         var error_begin = '<span class="error">';
         var error_last = '</span>';
-
         var error = false;
-        var present = Array();
 
-        /*group.each(function(i,group) {
-
-            $(group).find(input_txt).each(function () {
-                if($.trim($(this).val()) != '') {
-                    present[i] = 1;
-                }
-            });
-
-            $(group).find(input_hidden).each(function () {
-                if($.trim($(this).val()) != '') {
-                    present[i] = 1;
-                }
-            });
-
-        });
-
-        var full_check = false;
-        group.each(function(j) {
-            if (present[j]) {
-                full_check = true;
-            }
-        });
-
-        if(!full_check){
-            $('button[type="submit"]').after(error_begin+'Please enter bot fields informations.'+error_last);
-            error = true;
-        }
-
-         group.each(function(i,group) {
-                 $(group).find(input_txt).each(function () {
-                 if($.trim($(this).val()) != '') {
-                 present[i] = 1;
-                 }
-                 });
-
-                 $(group).find(input_hidden).each(function () {
-                 if($.trim($(this).val()) != '') {
-                 present[i] = 1;
-                 }
-                 });
-         });
-
-        */
-
-        group.each(function(i,group) {
-
-            var id = $(group).attr('id');
-
-            if($('#'+id).hasClass('active')){
-                present[i] = 1;
-            }
-        });
+        var input_txt = $('input[type="text"]');
+        var input_hidden = $('input[type="hidden"]');
+        var group   = $("div[id*='group']");
 
         group.each(function(k,groupele) {
 
-            if(present[k]) {
+            $(groupele).find(input_txt).each(function () {
+                if($.trim($(this).val()) == '') {
+                    $(this).parent('div').after(error_begin + $(this).attr('placeholder') + ' field is required.' + error_last);
+                    error = true;
+                }
+            });
 
-                $(groupele).find(input_txt).each(function () {
-                    if($.trim($(this).val()) == '') {
-                        $(this).parent('div').after(error_begin + $(this).attr('placeholder') + ' field is required.' + error_last);
-                        error = true;
-                    }
-                });
-
-                $(groupele).find(input_hidden).each(function () {
-                    if($.trim($(this).val()) == '') {
-                        $(this).parent('a').after(error_begin + 'This field is required.' + error_last);
-                        error = true;
-                    }
-                });
-
-            }
+            $(groupele).find(input_hidden).each(function () {
+                if($.trim($(this).val()) == '') {
+                    $(this).parent('a').after(error_begin + 'This field is required.' + error_last);
+                    error = true;
+                }
+            });
 
         });
 

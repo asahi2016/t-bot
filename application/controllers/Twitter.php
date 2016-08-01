@@ -209,4 +209,22 @@ class Twitter extends CI_Controller
     }
 
 
+    public function additem(){
+
+        $total_bots = $this->input->post('bots');
+
+        if($this->input->post('action') == 'add'){
+
+            $data['bkey'] = $total_bots + 1;
+            $data['class'] = 'class = active';
+            $data['display'] = 'display : block';
+            $data['bot'] = $data['bkey'] + 1;
+
+            $content = $this->load->view('addbots', $data, true);
+
+            echo json_encode(array('content' => $content, 'total_bots' => $data['bkey']));
+
+        }
+    }
+
 }
