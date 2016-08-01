@@ -191,12 +191,14 @@ $bots = array(1);
                     </div>
                 </div>
                 <input type="hidden" name="totalbots" id="totalbots" class="totalbots" value="0">
+                <input type="hidden" name="botsubmit" id="botsubmit" class="botsubmit" value="1">
             <div class="margin-bottom-25"></div>
             <div class="row">
                 <div class="col-md-12">
                     <button type="button" value="Add another bot item" class="btn btn-primary m-right10" name="add"> <i class="fa fa-twitter-square"></i> Add another bot item</button>
                     <button type="submit" value="Create Twitter Bots" class="btn btn-primary m-right10" name="botsubmit"> <i class="fa fa-twitter-square"></i> Create Twitter Bots</button>
                     <!--<button type="submit" class="btn btn-success" value="Upgrade to Premium"> <i class="fa fa-money"></i> Upgrade to Premium</button>-->
+                    <img src="<?php echo  base_url(); ?>application/assets/images/loading.gif" alt="Loading...." height="30" width="30" style="display: none;" id="loader">
                 </div>
             </div>
             <div class="margin-bottom-25"></div>

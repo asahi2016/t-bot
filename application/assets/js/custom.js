@@ -7,20 +7,42 @@ $(document).ready(function () {
     //Events Trigger
     $('form#twitterbots').submit(function () {
 
+        $('#loader').show();
+
+        $('span.error').remove();
+
+        $(this).attr('disabled','disabled');
+
         var error = fields_empty_checks();
 
         if(error){
+            $(this).removeAttr('disabled');
+            $('#loader').hide();
+            $('html, body').animate({
+                scrollTop: $(".panel-heading").offset().top
+            }, 1000);
             return false;
         }else{
-            group.each(function(i) {
-                if (!$(this).hasClass('active')) {
-                    $(this).remove();
+
+            var data = $('form#twitterbots').serialize();
+
+            $.post("twitter/create", data, function(result){
+                var data = JSON.parse(result);
+
+                if(data.success){
+                    $('span.success').text(data.success);
                 }else{
-                    $('#totalbots').val(i);
+                    $('span.success').after(data);
                 }
+
+                $(this).removeAttr('disabled');
+                $('#loader').hide();
+                $('html, body').animate({
+                    scrollTop: $(".panel-heading").offset().top
+                }, 1000);
             });
 
-            return true;
+            return false;
         }
 
     });

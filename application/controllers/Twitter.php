@@ -122,7 +122,15 @@ class Twitter extends CI_Controller
             }
 
             if ($this->form_validation->run() == FALSE) {
-                $this->index();
+                //$this->index();
+
+                if($this->input->post('botsubmit')){
+
+                    $data = validation_errors();
+
+                    echo json_encode($data);
+                }
+
             } else {
 
                 $data = array();
@@ -162,7 +170,8 @@ class Twitter extends CI_Controller
 
                 //$this->twitter_model->post_tweet($this->input->post('message'), $config);
 
-                $this->index($data);
+                //$this->index($data);
+                echo json_encode($data);
 
             }
         }else{
