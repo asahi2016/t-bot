@@ -143,4 +143,48 @@ $(document).ready(function () {
         return error;
     }
 
+    $(document).on('click', 'li' ,function(){
+        var action=$(this).attr('rel');
+        var group_id = $(this).parents('div.active').attr('id');
+        field_sets(action, group_id);
+    });
+
+    function field_sets(action, group_id) {
+
+        switch (action) {
+            case 'Add to Twitter List':
+                $('#'+group_id).find('.message').val('Not required').attr('readonly', true);
+                $('#'+group_id).find('.search_phrase').val("").attr('readonly', false);
+                break;
+            case 'DM':
+                $('#'+group_id).find('.message').attr('readonly', false);
+                $('#'+group_id).find('.search_phrase').val("").attr('readonly', false);
+                break;
+            case 'Retweet':
+                $('#'+group_id).find('.message').val('Not required').attr('readonly', true);
+                $('#'+group_id).find('.search_phrase').val("").attr('readonly', false);
+                break;
+            case 'Follow User':
+                $('#'+group_id).find('.message').val('Not required').attr('readonly', true);
+                $('#'+group_id).find('.search_phrase').val("").attr('readonly', false);
+                break;
+            case 'RT with Comment':
+                $('#'+group_id).find('.message').val("").attr('readonly', false);
+                $('#'+group_id).find('.search_phrase').val("").attr('readonly', false);
+                break;
+            case 'Reply':
+                $('#'+group_id).find('.search_phrase').val('Not required').attr('readonly', true);
+                $('#'+group_id).find('.message').val("").attr('readonly', false);
+                break;
+            case 'Favorite':
+                $('#'+group_id).find('.message').val('Not required').attr('readonly', true);
+                $('#'+group_id).find('.search_phrase').val("").attr('readonly', false);
+                break;
+            case 'DM Followers':
+                $('#'+group_id).find('.search_phrase').val('Not required').attr('readonly', true);
+                $('#'+group_id).find('.message').val("").attr('readonly', false);
+                break;
+        }
+    }
+
 });
