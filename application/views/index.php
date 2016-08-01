@@ -192,6 +192,7 @@ $bots = array(1);
                 </div>
                 <input type="hidden" name="totalbots" id="totalbots" class="totalbots" value="0">
                 <input type="hidden" name="botsubmit" id="botsubmit" class="botsubmit" value="1">
+                <input type="hidden" id="baseurl" value="<?php echo base_url();?>">
             <div class="margin-bottom-25"></div>
             <div class="row">
                 <div class="col-md-12">

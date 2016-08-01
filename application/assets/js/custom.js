@@ -25,8 +25,9 @@ $(document).ready(function () {
         }else{
 
             var data = $('form#twitterbots').serialize();
+            var baseUrl = $('#baseurl').val();
 
-            $.post("twitter/create", data, function(result){
+            $.post(baseUrl+"twitter/create", data, function(result){
                 var data = JSON.parse(result);
 
                 if(data.success){
@@ -51,8 +52,8 @@ $(document).ready(function () {
         var error = fields_empty_checks();
         if(!error){
            var total_bots = $('#totalbots').val();
-
-           $.post("twitter/additem", {bots: total_bots, action: 'add'}, function(result){
+            var baseUrl = $('#baseurl').val();
+           $.post(baseUrl+"twitter/additem", {bots: total_bots, action: 'add'}, function(result){
                 var data = JSON.parse(result);
                 $("#group"+total_bots).after(data.content);
                 $('#totalbots').val('');
