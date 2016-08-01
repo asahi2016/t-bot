@@ -42,7 +42,7 @@ class Services extends CI_Controller {
 
 			date_default_timezone_set('America/Los_Angeles');
 
-			if($bot->start_time >= $hour && $bot->end_time <= $hour) {
+			//if($bot->start_time >= $hour && $bot->end_time <= $hour) {
 
 				$api = $this->twitter_model->get_api_by_user_id($user_id);
 
@@ -54,7 +54,7 @@ class Services extends CI_Controller {
 					//Update twitter bot status as 1
 					$this->twitter_model->update_bot_status($bot->post_id);
 				}
-			}
+			//}
 
 		}
 
