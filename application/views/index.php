@@ -100,12 +100,6 @@ $bots = array(1);
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <div class="input-group">
-                                            <span class="input-group-addon">@</span>
-                                            <input type="text" class="form-control search_phrase" placeholder="Search phrase" name="search_phrase[<?=$bkey?>]" id="search_phrase_<?=$bkey?>" value="<?php echo  isset($search_phrase[$bkey])? $search_phrase[$bkey] :''; ?>">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
                                         <a class="btn btn-primary btn-select btn-select-light">
                                             <input type="hidden" class="btn-select-input tweet_action" id="tweet_action_<?=$bkey?>" name="tweet_action[<?=$bkey?>]" value="<?php echo isset($tweet_action[$bkey])? $tweet_action[$bkey] :''; ?>" />
                                             <span class="btn-select-value">--Select Action--</span>
@@ -125,6 +119,12 @@ $bots = array(1);
                                                 ?>
                                             </ul>
                                         </a>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">@</span>
+                                            <input type="text" class="form-control search_phrase" placeholder="Search phrase" name="search_phrase[<?=$bkey?>]" id="search_phrase_<?=$bkey?>" value="<?php echo  isset($search_phrase[$bkey])? $search_phrase[$bkey] :''; ?>">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="margin-bottom-25"></div>

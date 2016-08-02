@@ -162,6 +162,7 @@ $(document).ready(function () {
                 $('#'+group_id).find('.message').val("").attr('readonly', false);
                 $('#'+group_id).find('.search_phrase').val("").attr('readonly', false);
                 $('#'+group_id).find('.search_phrase').attr('placeholder', 'Eg: @Follower-name ');
+                $('#'+group_id).find('.message').attr('placeholder', 'Message');
                 break;
             case 'Retweet':
                 $('#'+group_id).find('.message').val('Not required').attr('readonly', true);
@@ -177,10 +178,12 @@ $(document).ready(function () {
                 $('#'+group_id).find('.message').val("").attr('readonly', false);
                 $('#'+group_id).find('.search_phrase').val("").attr('readonly', false);
                 $('#'+group_id).find('.search_phrase').attr('placeholder', 'Eg: #Tag-name ');
+                $('#'+group_id).find('.message').attr('placeholder', 'Message');
                 break;
             case 'Reply':
                 $('#'+group_id).find('.search_phrase').val('Not required').attr('readonly', true);
                 $('#'+group_id).find('.message').val("").attr('readonly', false);
+                $('#'+group_id).find('.message').attr('placeholder', 'Message');
                 break;
             case 'Favorite':
                 $('#'+group_id).find('.message').val('Not required').attr('readonly', true);
@@ -190,6 +193,7 @@ $(document).ready(function () {
             case 'DM Followers':
                 $('#'+group_id).find('.search_phrase').val('Not required').attr('readonly', true);
                 $('#'+group_id).find('.message').val("").attr('readonly', false);
+                $('#'+group_id).find('.message').attr('placeholder', 'Message');
                 break;
         }
     }
