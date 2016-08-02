@@ -24,7 +24,7 @@ class Services extends CI_Controller {
         $this->load->model('user_model');
 
 		//Get all user lists
-		$bots = $this->twitter_model->get_created_bots();
+		$bots = $this->twitter_model->get_created_bots($user_id);
 
 		foreach ($bots as $k => $bot){
 
