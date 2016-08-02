@@ -164,15 +164,6 @@ class Twitter extends CI_Controller
                     }
                 }
 
-                $user_api = $this->twitter_model->get_api_by_user_id($this->user->uid);
-
-                $config = '';
-                if($user_api){
-                    $config = $this->build_user_api_info($user_api);
-                }
-
-                //$this->twitter_model->post_tweet($this->input->post('message'), $config);
-
                 //$this->index($data);
                 echo json_encode($data);
 
