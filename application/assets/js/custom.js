@@ -32,6 +32,9 @@ $(document).ready(function () {
 
                 if(data.success){
                     $('span.success').text(data.success);
+                    setTimeout(function() {
+                        window.location.href = baseUrl;
+                    }, 5000);
                 }else{
                     $('span.success').after(data);
                 }
