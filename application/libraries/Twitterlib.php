@@ -120,7 +120,7 @@ class Twitterlib{
                 $post_value= array('q' => $bot->tag);
                 $content = $this->get_user_search_results($post_value );
                 foreach ($content as $k => $val){
-                    $log = $this->add_to_twitter_lists(array('slug' => 'family', 'owner_screen_name' => $api_user->screen_name , 'user_id' => $content[$k]->id));
+                    $log = $this->add_to_twitter_lists(array('slug' => $bot->message, 'owner_screen_name' => $api_user->screen_name , 'user_id' => $content[$k]->id));
                     if($log){
                         $return = true;
                     }

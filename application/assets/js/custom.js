@@ -153,24 +153,30 @@ $(document).ready(function () {
 
         switch (action) {
             case 'Add to Twitter List':
-                $('#'+group_id).find('.message').val('Not required').attr('readonly', true);
-                $('#'+group_id).find('.search_phrase').val("").attr('readonly', false);
+                $('#'+group_id).find('.message').val('').attr('placeholder', 'Enter your list name ');
+                $('#'+group_id).find('.search_phrase').attr('placeholder', 'Eg: #Movies');
+                $('#'+group_id).find('.search_phrase').val('').attr('readonly', false);
+                $('#'+group_id).find('.message').val('').attr('readonly', false);
                 break;
             case 'DM':
-                $('#'+group_id).find('.message').attr('readonly', false);
+                $('#'+group_id).find('.message').val("").attr('readonly', false);
                 $('#'+group_id).find('.search_phrase').val("").attr('readonly', false);
+                $('#'+group_id).find('.search_phrase').attr('placeholder', 'Eg: @Follower-name ');
                 break;
             case 'Retweet':
                 $('#'+group_id).find('.message').val('Not required').attr('readonly', true);
                 $('#'+group_id).find('.search_phrase').val("").attr('readonly', false);
+                $('#'+group_id).find('.search_phrase').attr('placeholder', 'Eg: #Tag-name ');
                 break;
             case 'Follow User':
                 $('#'+group_id).find('.message').val('Not required').attr('readonly', true);
                 $('#'+group_id).find('.search_phrase').val("").attr('readonly', false);
+                $('#'+group_id).find('.search_phrase').attr('placeholder', 'Eg: @Follower-name ');
                 break;
             case 'RT with Comment':
                 $('#'+group_id).find('.message').val("").attr('readonly', false);
                 $('#'+group_id).find('.search_phrase').val("").attr('readonly', false);
+                $('#'+group_id).find('.search_phrase').attr('placeholder', 'Eg: #Tag-name ');
                 break;
             case 'Reply':
                 $('#'+group_id).find('.search_phrase').val('Not required').attr('readonly', true);
@@ -179,6 +185,7 @@ $(document).ready(function () {
             case 'Favorite':
                 $('#'+group_id).find('.message').val('Not required').attr('readonly', true);
                 $('#'+group_id).find('.search_phrase').val("").attr('readonly', false);
+                $('#'+group_id).find('.search_phrase').attr('placeholder', 'Eg: #Tag-name ');
                 break;
             case 'DM Followers':
                 $('#'+group_id).find('.search_phrase').val('Not required').attr('readonly', true);
