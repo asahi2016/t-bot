@@ -29,19 +29,20 @@ $(document).ready(function () {
             var baseUrl = $('#baseurl').val();
 
             $.post(baseUrl+"twitter/create", data, function(result){
-                var data = JSON.parse(result);
 
-                if(data.success){
-                    $('span.success').text(data.success);
+                $(this).removeAttr('disabled');
+                $('#loader').hide();
+                
+                var res = JSON.parse(result);
+
+                if(res.success){
+                    $('span.success').text(res.success);
                     setTimeout(function() {
                         window.location.href = baseUrl;
                     }, 5000);
                 }else{
-                    $('span.success').after(data);
+                    $('span.success').after(res);
                 }
-
-                $(this).removeAttr('disabled');
-                $('#loader').hide();
                 $('html, body').animate({
                     scrollTop: $(".panel-heading").offset().top
                 }, 1000);
