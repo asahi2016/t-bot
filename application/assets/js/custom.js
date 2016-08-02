@@ -10,6 +10,7 @@ $(document).ready(function () {
         $('#loader').show();
 
         $('span.error').remove();
+        $('span.success').hide();
 
         $(this).attr('disabled','disabled');
 
