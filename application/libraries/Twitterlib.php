@@ -271,8 +271,6 @@ class Twitterlib{
 
         $content = $this->connection->post($this->add, $post_values);
 
-        print_pre($content,1);
-
         if($content){
             $return = $content;
         }
