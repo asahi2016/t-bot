@@ -22,6 +22,12 @@ $bots = array(1);
         <h1>Twitter Bots</h1>
         <h2>Written by @Asahitechnologies.</h2>
         <div class="twitter-form">
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="style2">You can make maximum of 10 Twitter bots. This free Twitter bots run every 15 minutes.</p>
+                </div>
+            </div>
+            <div class="margin-bottom-25"></div>
             <form accept-charset="utf-8" id="twitterbots" action="<?php echo  base_url(); ?>twitter/create" method="post">
                 <div class="clearfix"></div>
                 <div class="panel panel-red">
@@ -29,6 +35,7 @@ $bots = array(1);
                         <h3 class="panel-title"><!-- <i class="fa fa-tasks"></i>  -->Enter your Twitter Apps Keys:</h3>
                     </div>
                     <span class="success" style="color: green;"><?php echo isset($success)? $success: '';?></span>
+                    <span style="color:red;" id="max-error"></span>
                     <?php echo form_error('authcheck'); ?>
                     <div class="panel-body">
                         <div class="row">
@@ -200,12 +207,6 @@ $bots = array(1);
                     <button type="submit" value="Create Twitter Bots" class="btn btn-primary m-right10" name="botsubmit"> <i class="fa fa-twitter-square"></i> Create Twitter Bots</button>
                     <!--<button type="submit" class="btn btn-success" value="Upgrade to Premium"> <i class="fa fa-money"></i> Upgrade to Premium</button>-->
                     <img src="<?php echo  base_url(); ?>application/assets/images/loading.gif" alt="Loading...." height="30" width="30" style="display: none;" id="loader">
-                </div>
-            </div>
-            <div class="margin-bottom-25"></div>
-            <div class="row">
-                <div class="col-md-12">
-                    <!--<p class="style2">You can make 1 Twitter bot that can auto-reply/favorite/retweet tweets. Upgrade to Premium and make up to 5 bots that can follow users, send DMs and add users to Twitter lists. The free bot runs once per hour while premium Twitter bots run every 15 minutes.</p>-->
                 </div>
             </div>
             </form>

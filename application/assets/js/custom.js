@@ -55,17 +55,24 @@ $(document).ready(function () {
 
     $('button[type="button"][name="add"]').click(function () {
         var error = fields_empty_checks();
-        if(!error){
-           var total_bots = $('#totalbots').val();
-            var baseUrl = $('#baseurl').val();
-           $.post(baseUrl+"twitter/additem", {bots: total_bots, action: 'add'}, function(result){
-                var data = JSON.parse(result);
-                $("#group"+total_bots).after(data.content);
-                $('#totalbots').val('');
-                $('#totalbots').val(data.total_bots);
-           });
+        if(!error) {
+            var total_bots = $('#totalbots').val();
+            if (total_bots < 9) {
+                var baseUrl = $('#baseurl').val();
+                $.post(baseUrl + "twitter/additem", {bots: total_bots, action: 'add'}, function (result) {
+                    var data = JSON.parse(result);
+                    $("#group" + total_bots).after(data.content);
+                    $('#totalbots').val('');
+                    $('#totalbots').val(data.total_bots);
+                });
 
+            }
+            else{
+                $("#max-error").text("You have reached maximum of 10 twitter bots");
+            }
         }
+
+        return false;
     });
 
 
