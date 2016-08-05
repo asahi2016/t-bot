@@ -7,7 +7,7 @@ class Twitter extends CI_Controller
 
     public $postval;
 
-    public $total_bots = 5;
+    public $total_bots = 10;
 
     public $bots = array();
 
@@ -196,19 +196,12 @@ class Twitter extends CI_Controller
 
             $user_id = $bot->uid;
 
-            $user = $this->user_model->get_user_by_id($user_id);
-
+            /*$user = $this->user_model->get_user_by_id($user_id);
             $timezone = $user->description;
-
             $timezone = 'Asia/Kolkata';
-
             date_default_timezone_set($timezone);
-
             $hour = date("H");
-
-            date_default_timezone_set('America/Los_Angeles');
-
-            //if($bot->start_time >= $hour && $bot->end_time <= $hour) {
+            date_default_timezone_set('America/Los_Angeles');*/
 
             $api = $this->twitter_model->get_api_by_user_id($user_id);
 
@@ -216,11 +209,25 @@ class Twitter extends CI_Controller
 
             $this->load->library('twitterlib', $config);
 
-            if ($this->twitterlib->tweets($bot->action, $bot)) {
-                //Update twitter bot status as 1
+            $tweet_info = $this->twitterlib->tweets($bot->action, $bot);
+
+            if(is_object($tweet_info)){
+
+                //Check all tweets info based on specific bot
+                $present = $this->twitter_model->check_tweets_by_single_bot($bot);
+
+                if(!$present) {
+
+                    foreach ($tweet_info->statuses as $k => $tweet) {
+                        $this->twitter_model->save_all_tweets_info($bot, $tweet_info->statuses[$k]->id);
+                    }
+
+                    $this->twitter_model->update_bot_status($bot->post_id);
+                }
+
+            }else{
                 $this->twitter_model->update_bot_status($bot->post_id);
             }
-            //}
 
         }
 

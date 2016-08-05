@@ -67,7 +67,6 @@ class Twitterlib{
 
         $return = false;
 
-
         $api_user = $this->check();
 
         switch($action){
@@ -82,12 +81,7 @@ class Twitterlib{
             case 'Retweet':
                 $post_value = array('q' => $bot->tag, 'result_type' => 'recent');
                 $tweet_info = $this->get_tweet_search_results($post_value);
-                foreach ($tweet_info->statuses as $k => $tweet){
-                    $retweet=$this->retweet(array(array('id' => $tweet_info->statuses[$k]->id)));
-                    if($retweet){
-                        $return = true;
-                    }
-                }
+                $return = $tweet_info;
                 break;
 
             case 'Follow User':
@@ -100,12 +94,7 @@ class Twitterlib{
             case 'RT with Comment':
                 $post_value = array('q' => $bot->tag, 'result_type' => 'recent');
                 $tweet_info=$this->get_tweet_search_results($post_value);
-                foreach ($tweet_info->statuses as $k => $tweet){
-                    $content=$this->reply(array('status'=>$bot->message.' '.'https://twitter.com/'.$api_user->screen_name.'/status/'.$tweet_info->statuses[$k]->id));
-                    if($content){
-                        $return = true;
-                    }
-                }
+                $return = $tweet_info;
                 break;
 
             case 'Reply':
@@ -131,13 +120,7 @@ class Twitterlib{
 
                 $post_value=array('q' => $bot->tag, 'result_type' => 'recent');
                 $tweet_info=$this->get_tweet_search_results($post_value);
-                foreach ($tweet_info->statuses as $k => $tweet)
-                {
-                    $content=$this->favorite(array('id' => $tweet_info->statuses[$k]->id));
-                    if($content){
-                        $return = true;
-                    }
-                }
+                $return = $tweet_info;
                 break;
 
             case 'DM Followers':

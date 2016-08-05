@@ -8,6 +8,7 @@ class Twitter_model extends CI_Model
     var $credentials_table = 'credentials';
     var $posts_table = 'posts';
     var $relation_table = 'relations';
+    var $all_tweets = 'all_tweets';
 
     // get the active twitter account from the database, by row active = 1
     public function getActiveAccount()
@@ -197,13 +198,74 @@ class Twitter_model extends CI_Model
 
             return $query->result();
 
-
-
     }
+
     public function update_bot_status($post_id)
     {
         $data=array('status'=>1);
         $this->db->where('post_id',$post_id);
         $this->db->update($this->posts_table,$data);
     }
+
+    public function update_post_status($id){
+        $data=array('status'=>1);
+        $this->db->where('post_id',$id);
+        $this->db->update($this->all_tweets,$data);
+
+    }
+
+    public function check_tweets_by_single_bot($bot){
+
+        $data = array(
+            'post_id' => $bot->post_id,
+            'uid' => $bot->uid,
+            'cid' => $bot->cid,
+            'status' => 0
+        );
+
+        return $this->db->get_where($this->all_tweets , $data)->row();
+    }
+
+    public function save_all_tweets_info($bot, $tweet_id)
+    {
+        $data = array(
+            'post_id' => $bot->post_id,
+            'cid' => $bot->cid,
+            'uid' => $bot->uid,
+            'action' => $bot->action,
+            'tweet_id' => $tweet_id,
+            'status' => 0,
+            'comment' =>$bot->message,
+            'created' => date('Y-m-d H:i:s'),
+            'updated' =>date("Y-m-d H:i:s"),
+        );
+
+        if ($this->db->insert($this->all_tweets, $data)) {
+            return $this->db->insert_id();
+
+        }
+
+        return false;
+    }
+
+    public function action()
+    {
+
+        $this->db->select('*');
+        $this->db->from("$this->posts_table post");
+        $this->db->join("$this->all_tweets tweet", "tweet.post_id = post.post_id", "left");
+        $this->db->order_by("post.status");
+        $this->db->limit(1);
+
+        if (!empty($user_id)) {
+            $this->db->where("rel.uid", $user_id);
+        }
+
+        $this->db->where("post.status", 0);
+        $query = $this->db->get();
+
+        return $query->result();
+
+    }
+
 }
