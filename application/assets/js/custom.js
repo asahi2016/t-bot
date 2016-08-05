@@ -169,43 +169,58 @@ $(document).ready(function () {
                 $('#'+group_id).find('.search_phrase').attr('placeholder', 'Eg: #Movies');
                 $('#'+group_id).find('.search_phrase').val('').attr('readonly', false);
                 $('#'+group_id).find('.message').val('').attr('readonly', false);
+                $('#'+group_id).find('span.icon').html('#');
+                $('#'+group_id).find('span.message').html('List Name');
+
                 break;
             case 'DM':
                 $('#'+group_id).find('.message').val("").attr('readonly', false);
                 $('#'+group_id).find('.search_phrase').val("").attr('readonly', false);
-                $('#'+group_id).find('.search_phrase').attr('placeholder', 'Eg: @Follower-name ');
+                $('#'+group_id).find('.search_phrase').attr('placeholder', 'Eg: @Follower-name');
                 $('#'+group_id).find('.message').attr('placeholder', 'Message');
+                $('#'+group_id).find('span.message').html('Message');
+                $('#'+group_id).find('span.icon').html('@');
                 break;
             case 'Retweet':
                 $('#'+group_id).find('.message').val('Not required').attr('readonly', true);
                 $('#'+group_id).find('.search_phrase').val("").attr('readonly', false);
-                $('#'+group_id).find('.search_phrase').attr('placeholder', 'Eg: #Tag-name ');
+                $('#'+group_id).find('.search_phrase').attr('placeholder', 'Eg: #Tag-name');
+                $('#'+group_id).find('span.icon').html('#');
+                $('#'+group_id).find('span.message').html('@');
                 break;
             case 'Follow User':
                 $('#'+group_id).find('.message').val('Not required').attr('readonly', true);
                 $('#'+group_id).find('.search_phrase').val("").attr('readonly', false);
-                $('#'+group_id).find('.search_phrase').attr('placeholder', 'Eg: @Follower-name ');
+                $('#'+group_id).find('.search_phrase').attr('placeholder', 'Eg: @Follower-name');
+                $('#'+group_id).find('span.icon').html('@');
                 break;
             case 'RT with Comment':
                 $('#'+group_id).find('.message').val("").attr('readonly', false);
                 $('#'+group_id).find('.search_phrase').val("").attr('readonly', false);
-                $('#'+group_id).find('.search_phrase').attr('placeholder', 'Eg: #Tag-name ');
-                $('#'+group_id).find('.message').attr('placeholder', 'Message');
+                $('#'+group_id).find('.search_phrase').attr('placeholder', 'Eg: #Tag-name');
+                $('#'+group_id).find('.message').attr('placeholder', 'Enter your comment here');
+                $('#'+group_id).find('span.icon').html('#');
+                $('#'+group_id).find('span.message').html('Comment');
                 break;
             case 'Reply':
                 $('#'+group_id).find('.search_phrase').val('Not required').attr('readonly', true);
                 $('#'+group_id).find('.message').val("").attr('readonly', false);
                 $('#'+group_id).find('.message').attr('placeholder', 'Message');
+                $('#'+group_id).find('span.icon').html('@');
                 break;
             case 'Favorite':
                 $('#'+group_id).find('.message').val('Not required').attr('readonly', true);
                 $('#'+group_id).find('.search_phrase').val("").attr('readonly', false);
                 $('#'+group_id).find('.search_phrase').attr('placeholder', 'Eg: #Tag-name ');
+                $('#'+group_id).find('span.icon').html('#');
+                $('#'+group_id).find('span.message').html('@');
                 break;
             case 'DM Followers':
                 $('#'+group_id).find('.search_phrase').val('Not required').attr('readonly', true);
                 $('#'+group_id).find('.message').val("").attr('readonly', false);
                 $('#'+group_id).find('.message').attr('placeholder', 'Message');
+                $('#'+group_id).find('span.icon').html('@');
+                $('#'+group_id).find('span.message').html('Message');
                 break;
         }
     }

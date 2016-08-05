@@ -45,7 +45,7 @@ $times = array(
         </div>
         <div class="col-md-6">
             <div class="input-group">
-                <span class="input-group-addon">@</span>
+                <span class="input-group-addon icon">@</span>
                 <input type="text" class="form-control search_phrase" placeholder="Search phrase" name="search_phrase[<?=$bkey?>]" id="search_phrase_<?=$bkey?>" value="<?php echo  isset($search_phrase[$bkey])? $search_phrase[$bkey] :''; ?>">
             </div>
         </div>
@@ -54,7 +54,7 @@ $times = array(
     <div class="row">
         <div class="col-md-4">
             <div class="input-group">
-                <span class="input-group-addon">@</span>
+                <span class="input-group-addon message">@</span>
                 <input type="text" class="form-control message" placeholder="Message" name="message[<?=$bkey?>]" value="<?php echo isset($message[$bkey])? $message[$bkey] :''; ?>">
             </div>
         </div>
