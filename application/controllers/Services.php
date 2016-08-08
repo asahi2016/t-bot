@@ -7,60 +7,53 @@ class Services extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
+		$this->load->model('twitter_model');
 	}
 
 	public function index()
 	{
 
-		$user_id = null;
+		//Get all user information
+		$users = $this->twitter_model->all_users();
 
-		if(isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])){
+		foreach ($users as $u => $user) {
 
-			$user_id = trim($_SESSION['user_id']);
+			$action = $this->twitter_model->action($user->uid, $user->cid);
 
-		}
+			foreach ($action as $k => $id) {
 
-        $this->load->model('twitter_model');
-        $this->load->model('user_model');
-
-		//Get all user lists
-		$bots = $this->twitter_model->get_created_bots($user_id);
-
-		foreach ($bots as $k => $bot){
-
-			$user_id = $bot->uid;
-
-			$user = $this->user_model->get_user_by_id($user_id);
-
-			$timezone = $user->description;
-
-			$timezone = 'Asia/Kolkata';
-
-			date_default_timezone_set($timezone);
-
-			$hour = date("H");
-
-			date_default_timezone_set('America/Los_Angeles');
-
-			//if($bot->start_time >= $hour && $bot->end_time <= $hour) {
-
-				$api = $this->twitter_model->get_api_by_user_id($user_id);
+				$api = $this->twitter_model->get_api_by_user_id_and_cid($user->uid, $user->cid);
 
 				$config = $this->build_api_info($api);
 
 				$this->load->library('twitterlib', $config);
 
-				if ($this->twitterlib->tweets($bot->action, $bot)) {
-					//Update twitter bot status as 1
-					$this->twitter_model->update_bot_status($bot->post_id);
+				$api_user = $this->twitterlib->check();
+
+				$switch = $id->action;
+
+				switch ($switch) {
+					case 'Favorite':
+						$this->twitterlib->favorite(array('id' => $id->tweet_id));
+						break;
+
+					case 'Retweet':
+						$this->twitterlib->retweet(array(array('id' => $id->tweet_id)));
+						break;
+
+					case 'RT with Comment':
+						$this->twitterlib->reply(array('status' => $id->message . ' ' . 'https://twitter.com/' . $api_user->screen_name . '/status/' . $id->tweet_id));
+						break;
 				}
-			//}
 
+				$this->twitter_model->set_individual_tweet_status($id->id);
+
+			}
 		}
-
 	}
 
-	public function build_api_info($api){
+	public function build_api_info($api)
+	{
 
 		$config = array(
 			'consumer_key' => $api->consumer_key,

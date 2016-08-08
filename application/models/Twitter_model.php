@@ -64,6 +64,27 @@ class Twitter_model extends CI_Model
 
     }
 
+    public function get_api_by_user_id_and_cid($user_id , $cid){
+
+        if($user_id){
+
+            $user_info = array(
+                'cid' => $cid,
+                'uid' => $user_id,
+            );
+
+            return $this->db->get_where($this->credentials_table , $user_info)->row();
+
+        }
+
+        return false;
+
+    }
+
+    public function all_users(){
+        return $this->db->get($this->credentials_table)->result();
+    }
+
     public function check_api_by_user_id($user_id, $api = array()){
 
         if(!empty($user_id)){
@@ -214,6 +235,14 @@ class Twitter_model extends CI_Model
 
     }
 
+    //set_individual_tweet_status
+    public function set_individual_tweet_status($id){
+        $data=array('status'=>1);
+        $this->db->where('id',$id);
+        $this->db->update($this->all_tweets,$data);
+    }
+
+
     public function check_tweets_by_single_bot($bot){
 
         $data = array(
@@ -248,20 +277,22 @@ class Twitter_model extends CI_Model
         return false;
     }
 
-    public function action()
+    public function action($user_id = null, $cid = null)
     {
 
         $this->db->select('*');
         $this->db->from("$this->posts_table post");
-        $this->db->join("$this->all_tweets tweet", "tweet.post_id = post.post_id", "left");
-        $this->db->order_by("post.status");
-        $this->db->limit(1);
+        $this->db->join("$this->all_tweets tweet", "tweet.uid = post.uid AND tweet.cid = post.cid", "left");
 
         if (!empty($user_id)) {
-            $this->db->where("rel.uid", $user_id);
+            $this->db->where("tweet.uid", $user_id);
         }
-
-        $this->db->where("post.status", 0);
+        if (!empty($cid)){
+            $this->db->where("tweet.cid", $cid);
+        }
+        $this->db->where("tweet.status", 0);
+        $this->db->order_by("tweet.id",'ASC');
+        $this->db->limit(1);
         $query = $this->db->get();
 
         return $query->result();
