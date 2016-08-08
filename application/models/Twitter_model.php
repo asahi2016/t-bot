@@ -237,9 +237,9 @@ class Twitter_model extends CI_Model
 
     //set_individual_tweet_status
     public function set_individual_tweet_status($id){
-        $data=array('status'=>1);
+        //$data=array('status'=>1);
         $this->db->where('id',$id);
-        $this->db->update($this->all_tweets,$data);
+        $this->db->delete($this->all_tweets);
     }
 
 
