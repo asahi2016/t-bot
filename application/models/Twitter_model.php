@@ -282,7 +282,7 @@ class Twitter_model extends CI_Model
 
         $this->db->select('*');
         $this->db->from("$this->posts_table post");
-        $this->db->join("$this->all_tweets tweet", "tweet.uid = post.uid AND tweet.cid = post.cid", "left");
+        $this->db->join("$this->all_tweets tweet", "tweet.uid = post.uid AND tweet.cid = post.cid AND post.post_id = tweet.post_id", "left");
 
         if (!empty($user_id)) {
             $this->db->where("tweet.uid", $user_id);
