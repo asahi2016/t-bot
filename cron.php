@@ -1,10 +1,9 @@
 <?php
 
 //Initiating the curl
-$url="http://www.ariessoft.com/demo/report_generate/generate_report";
+$url="http://dev.asahitechnologies.com/t-bot/services";
 //$url = "https://www.gmail.com";
 $ch = curl_init($url);
-
 
 //User/Browser Agent setting
 $userAgent = 'Mozilla/16.0 (compatible; MSIE 6.0; Windows NT 5.1; .NET CLR 1.1.4322)';
@@ -21,9 +20,7 @@ curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,false);
 //$username='student.teststudent1@gmail.com';
 //$password='test@123';
 
-
 //curl_setopt($ch, CURLOPT_USERPWD, "$username:$password");
-
 
 //Curl Execution
 $data = curl_exec($ch);
