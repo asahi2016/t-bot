@@ -13,9 +13,9 @@ require __DIR__."/Abraham/TwitterOAuth/autoload.php";
 
 use Abraham\TwitterOAuth\TwitterOAuth;
 
-$connection = '';
-
 class Twitterlib{
+
+    public $connection = '';
 
     public $consumer_key = '';
 

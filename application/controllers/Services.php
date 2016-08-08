@@ -26,7 +26,9 @@ class Services extends CI_Controller {
 
 				$config = $this->build_api_info($api);
 
-				$this->load->library('twitterlib', $config);
+				$this->load->library('twitterlib');
+
+				$this->twitterlib = new Twitterlib($config);
 
 				$api_user = $this->twitterlib->check();
 
