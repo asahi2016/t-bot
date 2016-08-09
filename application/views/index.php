@@ -38,17 +38,18 @@ $bots = array(1);
                     <span style="color:red;" id="max-error"></span>
                     <?php echo form_error('authcheck'); ?>
                     <div class="panel-body">
+                        <div id="group">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="input-group">
-                                    <span class="input-group-addon">@</span>
-                                    <input type="text" class="form-control" placeholder="Consumer Key" name="consumer_key" id="consumer_key" value="<?php echo  isset($consumer_key)? $consumer_key :''; ?>">
+                                    <span class="input-group-addon">Consumer Key</span>
+                                    <input type="text" class="form-control" name="consumer_key" id="consumer_key" value="<?php echo  isset($consumer_key)? $consumer_key :''; ?>">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="input-group">
-                                    <span class="input-group-addon">@</span>
-                                    <input type="text" class="form-control" placeholder="Consumer Secret" name="consumer_secret" id="consumer_secret" value="<?php echo  isset($consumer_secret)? $consumer_secret :''; ?>">
+                                    <span class="input-group-addon">Consumer Secret</span>
+                                    <input type="text" class="form-control" name="consumer_secret" id="consumer_secret" value="<?php echo  isset($consumer_secret)? $consumer_secret :''; ?>">
                                 </div>
                             </div>
                         </div>
@@ -56,17 +57,18 @@ $bots = array(1);
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="input-group">
-                                    <span class="input-group-addon">@</span>
-                                    <input type="text" class="form-control" placeholder="Access Token" name="access_token" id="access_token" value="<?php echo  isset($access_token)? $access_token :''; ?>">
+                                    <span class="input-group-addon">Access Token</span>
+                                    <input type="text" class="form-control" name="access_token" id="access_token" value="<?php echo  isset($access_token)? $access_token :''; ?>">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="input-group">
-                                    <span class="input-group-addon">@</span>
-                                    <input type="text" class="form-control" placeholder="Access Secret" name="access_secret" id="access_secret" value="<?php echo  isset($access_secret)? $access_secret :''; ?>">
+                                    <span class="input-group-addon">Access Secret</span>
+                                    <input type="text" class="form-control" name="access_secret" id="access_secret" value="<?php echo  isset($access_secret)? $access_secret :''; ?>">
                                 </div>
                             </div>
                         </div>
+                    </div>
                     </div>
                     <div class="panel-body">
                         <div class="row">

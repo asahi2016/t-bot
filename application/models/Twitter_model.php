@@ -279,7 +279,6 @@ class Twitter_model extends CI_Model
 
     public function action($user_id = null, $cid = null)
     {
-
         $this->db->select('*');
         $this->db->from("$this->posts_table post");
         $this->db->join("$this->all_tweets tweet", "tweet.uid = post.uid AND tweet.cid = post.cid AND post.post_id = tweet.post_id", "left");
@@ -291,8 +290,8 @@ class Twitter_model extends CI_Model
             $this->db->where("tweet.cid", $cid);
         }
         $this->db->where("tweet.status", 0);
+        $this->db->group_by('post.post_id');
         $this->db->order_by("tweet.id",'ASC');
-        $this->db->limit(1);
         $query = $this->db->get();
 
         return $query->result();
