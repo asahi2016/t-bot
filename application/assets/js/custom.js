@@ -68,6 +68,9 @@ $(document).ready(function () {
 
             }
             else{
+                $('html, body').animate({
+                    scrollTop: $(".panel-heading").offset().top
+                }, 1000);
                 $("#max-error").text("You have reached maximum of 10 twitter bots");
             }
         }
@@ -133,6 +136,7 @@ $(document).ready(function () {
         var input_txt = $('input[type="text"]');
         var input_hidden = $('input[type="hidden"]');
         var group   = $("div[id*='group']");
+        var group1  = $("div[id*='g1']");
 
         group.each(function(k,groupele) {
 
@@ -151,6 +155,15 @@ $(document).ready(function () {
                 }
             });
 
+        });
+        group1.each(function(k,groupele) {
+            $(groupele).find(input_txt).each(function () {
+                if ($.trim($(this).val()) == '') {
+                    var textval = ( $.trim($(this).parent('div.input-group').text()) == '@') ? 'This' : $(this).parent('div.input-group').text();
+                    $(this).parent('div').after(error_begin + textval + ' field is required.' + error_last);
+                    error = true;
+                }
+            });
         });
 
         return error;

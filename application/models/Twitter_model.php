@@ -82,6 +82,9 @@ class Twitter_model extends CI_Model
     }
 
     public function all_users(){
+        /*$this->db->select('*');
+        $this->db->from("$this->posts_table post");
+        $this->db->join("$this->credentials_table credential", "credential.uid = post.uid AND credential.cid = post.cid", "left");*/
         return $this->db->get($this->credentials_table)->result();
     }
 
@@ -279,9 +282,10 @@ class Twitter_model extends CI_Model
 
     public function action($user_id = null, $cid = null)
     {
+        $hour = date("H");
         $this->db->select('*');
         $this->db->from("$this->posts_table post");
-        $this->db->join("$this->all_tweets tweet", "tweet.uid = post.uid AND tweet.cid = post.cid AND post.post_id = tweet.post_id", "left");
+        $this->db->join("$this->all_tweets tweet", "tweet.uid = post.uid AND tweet.cid = post.cid AND post.post_id = tweet.post_id AND post.start_time <= $hour AND post.end_time>=$hour", "left");
 
         if (!empty($user_id)) {
             $this->db->where("tweet.uid", $user_id);

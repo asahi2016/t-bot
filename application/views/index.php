@@ -38,7 +38,7 @@ $bots = array(1);
                     <span style="color:red;" id="max-error"></span>
                     <?php echo form_error('authcheck'); ?>
                     <div class="panel-body">
-                        <div id="group">
+                        <div id="g1">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="input-group">
@@ -215,5 +215,3 @@ $bots = array(1);
         </div>
 </section>
 <script type="text/javascript" src="<?php echo base_url(); ?>application/assets/js/custom.js"></script>
-
-

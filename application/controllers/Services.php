@@ -8,6 +8,7 @@ class Services extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('twitter_model');
+		$this->load->model('user_model');
 	}
 
 	public function index()
@@ -18,8 +19,12 @@ class Services extends CI_Controller {
 
 		foreach ($users as $u => $user) {
 
-			$action = $this->twitter_model->action($user->uid, $user->cid);
-
+			$userinfo = $this->user_model->get_user_by_id($user->uid);
+			$timezone = $userinfo->description;
+			date_default_timezone_set($timezone);
+			$action = $this->twitter_model->action($user->uid, $user->cid );
+			date_default_timezone_set('America/Los_Angeles');
+			
 			foreach ($action as $k => $id) {
 
 				$api = $this->twitter_model->get_api_by_user_id_and_cid($user->uid, $user->cid);
