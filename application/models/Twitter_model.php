@@ -279,6 +279,19 @@ class Twitter_model extends CI_Model
 
         return false;
     }
+    public function pot_status($user_id)
+    {
+        $hour = date("H");
+        $this->db->select('*');
+        $this->db->from("$this->posts_table");
+
+        $this->db->where("status", 0);
+        $this->db->where("end_time>=$hour");
+        $this->db->where("start_time<=$hour");
+        $query = $this->db->get();
+        return $query->result();
+    }
+
 
     public function action($user_id = null, $cid = null)
     {

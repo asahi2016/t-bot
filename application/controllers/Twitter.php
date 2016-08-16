@@ -196,12 +196,7 @@ class Twitter extends CI_Controller
 
             $user_id = $bot->uid;
 
-            /*$user = $this->user_model->get_user_by_id($user_id);
-            $timezone = $user->description;
-            $timezone = 'Asia/Kolkata';
-            date_default_timezone_set($timezone);
-            $hour = date("H");
-            date_default_timezone_set('America/Los_Angeles');*/
+            $user = $this->user_model->get_user_by_id($user_id);
 
             $api = $this->twitter_model->get_api_by_user_id($user_id);
 
@@ -209,8 +204,8 @@ class Twitter extends CI_Controller
 
             $this->load->library('twitterlib', $config);
 
-            $tweet_info = $this->twitterlib->tweets($bot->action, $bot);
 
+                $tweet_info = $this->twitterlib->tweets($bot->action, $bot);
             if(is_object($tweet_info)){
 
                 //Check all tweets info based on specific bot
@@ -226,7 +221,7 @@ class Twitter extends CI_Controller
                 }
 
             }else{
-                $this->twitter_model->update_bot_status($bot->post_id);
+                $this->twitter_model->save_all_tweets_info($bot,"Not_required");
             }
 
         }

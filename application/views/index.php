@@ -204,7 +204,7 @@ $bots = array(1);
                 <input type="hidden" id="baseurl" value="<?php echo base_url();?>">
             <div class="margin-bottom-25"></div>
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-12 margin">
                     <button type="button" value="Add another bot item" class="btn btn-primary m-right10" name="add"> <i class="fa fa-twitter-square"></i> Add another bot item</button>
                     <button type="submit" value="Create Twitter Bots" class="btn btn-primary m-right10" name="botsubmit"> <i class="fa fa-twitter-square"></i> Create Twitter Bots</button>
                     <!--<button type="submit" class="btn btn-success" value="Upgrade to Premium"> <i class="fa fa-money"></i> Upgrade to Premium</button>-->
