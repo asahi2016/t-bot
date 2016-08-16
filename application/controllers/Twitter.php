@@ -189,6 +189,8 @@ class Twitter extends CI_Controller
         $this->load->model('twitter_model');
         $this->load->model('user_model');
 
+        $services = array('DM','Follow User','Reply','Add to Twitter List','DM Followers');
+
         //Get all user lists
         $bots = $this->twitter_model->get_created_bots($user_id);
 
@@ -204,24 +206,27 @@ class Twitter extends CI_Controller
 
             $this->load->library('twitterlib', $config);
 
+            if(!in_array($bot->action, $services)) {
 
                 $tweet_info = $this->twitterlib->tweets($bot->action, $bot);
-            if(is_object($tweet_info)){
 
-                //Check all tweets info based on specific bot
-                $present = $this->twitter_model->check_tweets_by_single_bot($bot);
+                if (is_object($tweet_info)) {
 
-                if(!$present) {
+                    //Check all tweets info based on specific bot
+                    $present = $this->twitter_model->check_tweets_by_single_bot($bot);
 
-                    foreach ($tweet_info->statuses as $k => $tweet) {
-                        $this->twitter_model->save_all_tweets_info($bot, $tweet_info->statuses[$k]->id);
+                    if (!$present) {
+
+                        foreach ($tweet_info->statuses as $k => $tweet) {
+                            $this->twitter_model->save_all_tweets_info($bot, $tweet_info->statuses[$k]->id);
+                        }
+
+                        $this->twitter_model->update_bot_status($bot->post_id);
                     }
 
-                    $this->twitter_model->update_bot_status($bot->post_id);
                 }
-
             }else{
-                $this->twitter_model->save_all_tweets_info($bot,"Not_required");
+                $this->twitter_model->save_all_tweets_info($bot,"Not required");
             }
 
         }

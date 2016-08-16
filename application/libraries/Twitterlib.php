@@ -71,12 +71,12 @@ class Twitterlib{
 
         switch($action){
 
-           /* case 'DM':
+            case 'DM':
                 $post_value = array('text' => $bot->message, 'screen_name' => $bot->tag);
                 if($this->direct_message($post_value)){
                     $return = true;
                 }
-                break;*/
+                break;
 
             case 'Retweet':
                 $post_value = array('q' => $bot->tag, 'result_type' => 'recent');
@@ -84,12 +84,12 @@ class Twitterlib{
                 $return = $tweet_info;
                 break;
 
-            /*case 'Follow User':
+            case 'Follow User':
                 $post_value = array('screen_name' => $bot->tag);
                 if($this->follow_user($post_value)){
                     $return = true;
                 }
-                break;*/
+                break;
 
             case 'RT with Comment':
                 $post_value = array('q' => $bot->tag, 'result_type' => 'recent');
@@ -97,13 +97,13 @@ class Twitterlib{
                 $return = $tweet_info;
                 break;
 
-           /* case 'Reply':
+            case 'Reply':
 
                 $post_value = array('status'=> $bot->message);
                 if($this->reply($post_value)){
                     $return = true;
                 }
-                break;*/
+                break;
 
             case 'Add to Twitter List':
                 $post_value= array('q' => $bot->tag);
@@ -123,7 +123,7 @@ class Twitterlib{
                 $return = $tweet_info;
                 break;
 
-           /* case 'DM Followers':
+            case 'DM Followers':
                 $content = $this->get_dm_followers(array('screen_name'=> $api_user->screen_name ));
                 foreach ($content->users as $k => $a) {
                    $log = $this->direct_message(array('user_id' => $content->users[$k]->id, 'text' => $bot->message));
@@ -131,7 +131,7 @@ class Twitterlib{
                        $return = true;
                    }
                 }
-                break;*/
+                break;
         }
 
         return $return;
