@@ -20,6 +20,8 @@ class Services extends CI_Controller {
 
 			$userinfo = $this->user_model->get_user_by_id($user->uid);
 
+			print_pre($userinfo);
+
 			$timezone = $userinfo->description;
 
 			date_default_timezone_set('Asia/Kolkata');
@@ -79,6 +81,8 @@ class Services extends CI_Controller {
 				$this->twitter_model->set_individual_tweet_status($id->id);
 			}
 		}
+
+		exit;
 	}
 
 	public function build_api_info($api)
