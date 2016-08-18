@@ -9,7 +9,7 @@ class Services extends CI_Controller {
 		parent::__construct();
 		$this->load->model('twitter_model');
 		$this->load->model('user_model');
-		date_default_timezone_set('America/Los_Angeles');
+
 	}
 
 	public function index()
@@ -19,16 +19,18 @@ class Services extends CI_Controller {
 
 		foreach ($users as $u => $user) {
 
+			unset($userinfo);
+
 			$userinfo = $this->user_model->get_user_by_id($user->uid);
 
 			$timezone = $userinfo->description;
 
-			//date_default_timezone_set($timezone);
+			date_default_timezone_set($timezone);
 
 			//Get all_tweets table info where status=0
 			$action = $this->twitter_model->action($user->uid, $user->cid);
 
-			//date_default_timezone_set('America/Los_Angeles');
+			date_default_timezone_set('America/Los_Angeles');
 
 			foreach ($action as $k => $id) {
 
