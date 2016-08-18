@@ -78,51 +78,6 @@ class Services extends CI_Controller {
 				$this->twitter_model->update_bot_status($id->post_id);
 				$this->twitter_model->set_individual_tweet_status($id->id);
 			}
-
-			/*foreach ($get_post_status as $k => $id) {
-				$api = $this->twitter_model->get_api_by_user_id_and_cid($user->uid, $user->cid);
-				$config = $this->build_api_info($api);
-
-				$this->load->library('twitterlib');
-
-				$this->twitterlib = new Twitterlib($config);
-
-				$api_user = $this->twitterlib->check();
-
-				$switch = $id->action;
-				switch ($switch) {
-					case 'DM Followers':
-						$content = $this->twitterlib->get_dm_followers(array('screen_name' => $api_user->screen_name));
-						foreach ($content->users as $k => $a) {
-							$log = $this->twitterlib->direct_message(array('user_id' => $content->users[$k]->id, 'text' => $id->message));
-							if ($log) {
-								$return = true;
-							}
-						}
-						break;
-					case 'Follow User':
-						$post_value = array('screen_name' => $id->tag);
-						if ($this->twitterlib->follow_user($post_value)) {
-							$return = true;
-						}
-						break;
-					case 'Reply':
-
-						$post_value = array('status' => $id->message);
-						if ($this->twitterlib->reply($post_value)) {
-							$return = true;
-						}
-						break;
-					case 'DM':
-						$post_value = array('text' => $id->message, 'screen_name' => $id->tag);
-						if ($this->twitterlib->direct_message($post_value)) {
-							$return = true;
-						}
-						break;
-				}
-
-			}*/
-
 		}
 	}
 
