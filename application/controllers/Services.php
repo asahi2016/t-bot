@@ -23,9 +23,9 @@ class Services extends CI_Controller {
 
 			$userinfo = $this->user_model->get_user_by_id($user->uid);
 
-			$usertimezone = $userinfo->description;
+			//$usertimezone = $userinfo->description;
 
-			date_default_timezone_set('America/Los_Angeles');
+			date_default_timezone_set($userinfo->description);
 
 			//Get all_tweets table info where status=0
 			$action = $this->twitter_model->action($user->uid, $user->cid);
