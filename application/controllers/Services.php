@@ -25,7 +25,7 @@ class Services extends CI_Controller {
 
 			$usertimezone = $userinfo->description;
 
-			date_default_timezone_set($usertimezone);
+			date_default_timezone_set('America/Los_Angeles');
 
 			//Get all_tweets table info where status=0
 			$action = $this->twitter_model->action($user->uid, $user->cid);
@@ -82,7 +82,7 @@ class Services extends CI_Controller {
 				$this->twitter_model->set_individual_tweet_status($id->id);
 			}
 		}
-		
+
 	}
 
 	public function build_api_info($api)
