@@ -298,7 +298,7 @@ class Twitter_model extends CI_Model
         $hour = date("H");
         $this->db->select('*');
         $this->db->from("$this->posts_table post");
-        $this->db->join("$this->all_tweets tweet", "tweet.uid = post.uid AND tweet.cid = post.cid AND post.post_id = tweet.post_id AND post.start_time <= $hour AND post.end_time>=$hour", "left");
+        $this->db->join("$this->all_tweets tweet", "tweet.uid = post.uid AND tweet.cid = post.cid AND post.post_id = tweet.post_id AND post.start_time <= $hour AND post.end_time >= $hour", "left");
 
         if (!empty($user_id)) {
             $this->db->where("tweet.uid", $user_id);

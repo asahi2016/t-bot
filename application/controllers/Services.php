@@ -82,8 +82,7 @@ class Services extends CI_Controller {
 				$this->twitter_model->set_individual_tweet_status($id->id);
 			}
 		}
-
-		exit;
+		
 	}
 
 	public function build_api_info($api)
