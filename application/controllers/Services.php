@@ -47,6 +47,12 @@ class Services extends CI_Controller {
 				$switch = $id->action;
 
 				switch ($switch) {
+					case 'Add to Twitter List':
+						$content = $this->twitterlib->get_user_search_results(array('q' => $id->tag));
+						foreach ($content as $k => $val){
+							$this->add_to_twitter_lists(array('slug' => $id->message, 'owner_screen_name' => $api_user->screen_name , 'user_id' => $content[$k]->id));
+						}
+						break;
 					case 'Favorite':
 						$this->twitterlib->favorite(array('id' => $id->tweet_id));
 						break;
