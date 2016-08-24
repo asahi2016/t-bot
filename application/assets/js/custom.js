@@ -19,9 +19,6 @@ $(document).ready(function () {
         if(error){
             $(this).removeAttr('disabled');
             $('#loader').hide();
-            $('html, body').animate({
-                scrollTop: $(".panel-heading").offset().top
-            }, 1000);
             return false;
         }else{
 
