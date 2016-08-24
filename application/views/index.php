@@ -24,7 +24,7 @@ $bots = array(1);
         <div class="twitter-form">
             <div class="row">
                 <div class="col-md-12">
-                    <p class="style2">You can make maximum of 10 Twitter bots. This free Twitter bots run every 15 minutes.</p>
+                    <p class="style2">You can make a maximum of 10 Twitter bots. This free Twitter bots runs every 15 minutes.</p>
                 </div>
             </div>
             <div class="margin-bottom-25"></div>
